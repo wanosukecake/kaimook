@@ -13,6 +13,7 @@ $title = '投稿一覧';
         <th scope="col">件名</th>
         <th scope="col">時間</th>
         <th scope="col">詳細</th>
+        <th scope="col">編集</th>
         </tr>
     </thead>
     <tbody>
@@ -25,8 +26,13 @@ $title = '投稿一覧';
                 {{ link_to_route('back.reports.show', '詳細', $report, [
                             'class' => 'btn btn-info',
                             'target' => '_new']) }}
-                </td>    
-                   </tr>
+                </td>
+                <td>
+                {{ link_to_route('back.reports.edit', '編集', $report, [
+                            'class' => 'btn btn-info',
+                            'target' => '_new']) }}
+                </td>
+            </tr>
         @endforeach
     </tbody>
     </table>

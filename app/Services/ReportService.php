@@ -40,7 +40,7 @@ class ReportService extends BaseService
 
     /**
      * レポートを登録
-     * @param  object  $postData
+     * @param  object  $request
      * @return 
      */
     public function save($request)
@@ -49,4 +49,14 @@ class ReportService extends BaseService
         return $report;
     }
 
+    /**
+     * レポートの更新
+     * @param  object  $request
+     * @return 
+     */
+    public function update($request)
+    {
+        $report = $this->report->update($request->all());
+        return $report;
+    }
 }
