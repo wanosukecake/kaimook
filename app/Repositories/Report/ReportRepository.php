@@ -3,7 +3,6 @@
 namespace App\Repositories\Report;
 
 use App\Models\Report;
-use Auth;
 
 class ReportRepository implements ReportRepositoryInterface
 {
@@ -18,6 +17,11 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     public function save($request) {
+        $result = Report::create($request);
+        return $result;
+    }
+
+    public function update($request) {
         $result = Report::create($request);
         return $result;
     }
