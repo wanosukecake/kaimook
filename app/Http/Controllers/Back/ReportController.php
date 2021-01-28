@@ -27,6 +27,7 @@ class ReportController extends Controller
     public function index()
     {
         $reports = $this->reportService->getReportsList();
+
         return view('back.reports.index', compact('reports'));
     }
 

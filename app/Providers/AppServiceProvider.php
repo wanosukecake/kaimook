@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Date;
+use Carbon\CarbonImmutable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Report\ReportRepositoryInterface::class,
             \App\Repositories\Report\ReportRepository::class
         );
-        // $this->app->bind('App\Services\ReportService'); 
+        Date::use(CarbonImmutable::class);
 
     }
 
