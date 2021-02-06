@@ -27,8 +27,21 @@ class ReportController extends Controller
     public function index()
     {
         $reports = $this->reportService->getReportsList();
+        return response(view('back.reports.index', compact('reports')))
+        ->withHeaders([
+            'Cache-Control' => 'no-store',
+        ]);
+    }
 
-        return view('back.reports.index', compact('reports'));
+    /**
+     * return graph data.
+     * @return json \Illuminate\Http\Response
+     */
+    public function getIndexGraphData() 
+    {
+        $data = $this->reportService->getIndexGraphData();
+
+        return response()->json($data);
     }
 
     /**

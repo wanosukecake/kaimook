@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Report\ReportRepositoryInterface::class,
             \App\Repositories\Report\ReportRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Goal\GoalRepositoryInterface::class,
+            \App\Repositories\Goal\GoalRepository::class
+        );
         Date::use(CarbonImmutable::class);
 
     }

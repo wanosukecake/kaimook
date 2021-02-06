@@ -23,7 +23,7 @@ class ReportService extends BaseService
     {
         // 一覧表示用
         $reports = $this->report->getReportsList(Auth::id());
-
+// todo：ここ要リファクタ
         $today = Carbon::today();
         // 日次勉強時間の集計
         $daily_total = $this->calculateTotalTime($reports, $today, $today->endOfDay());
@@ -38,6 +38,41 @@ class ReportService extends BaseService
             'weeklyTotal' => $weekly_total,
             'monthlyTotal' => $monthly_total
         ];
+
+        return $result;
+    }
+
+    /**
+     * レポート一覧画面のグラフ描画用にデータ取得
+     * @return array $result
+     */
+    public function getIndexGraphData()
+    {
+        $reports = $this->report->getReportsList(Auth::id());
+        $today = Carbon::today();
+        $daily = $reports
+                    ->whereBetween('created_at', [$today->startOfWeek()->subDay(1), $today->endOfWeek()->subDay(1)])
+                    ->groupBy(function($date) {
+                        // m/dでまとめて今週分を集計
+                        return Carbon::parse($date->created_at)->format('m/d');
+                    });
+        // 週時間の集計
+        $dailyHours = $daily
+                        ->map(function ($day) {
+                            return $day->sum('hour');
+                        });
+        // 週分の集計
+        $dailyMinutes = $daily
+                        ->map(function ($day) {
+                            return $day->sum('minutes');
+                        });
+
+        $result = [];
+        // 分を時間に換算し、resultを整形
+        foreach ($dailyMinutes as $key => $row) {
+            $result['data'][] = $dailyHours[$key] + floor($row / 60);
+            $result['label'][] = $key;
+        }
 
         return $result;
     }

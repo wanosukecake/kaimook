@@ -3,32 +3,13 @@ $title = '投稿一覧';
 ?>
 @extends('back.layouts.base')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<canvas id="myChart"></canvas>
+<div class="graph" style="width:600px;">
+    <canvas id="myChart"></canvas>
+</div>
 
-<script src="{{ asset('../../js/report.js') }}"></script>
-<script>
+<canvas id="dailyChart"></canvas>
 
-// var ctx = document.getElementById('myChart').getContext('2d');
-// var chart = new Chart(ctx, {
-//     // The type of chart we want to create
-//     type: 'line',
 
-//     // The data for our dataset
-//     data: {
-//         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-//         datasets: [{
-//             label: 'My First dataset',
-//             backgroundColor: 'rgb(255, 99, 132)',
-//             borderColor: 'rgb(255, 99, 132)',
-//             data: [0, 10, 5, 2, 20, 30, 45]
-//         }]
-//     },
-
-//     // Configuration options go here
-//     options: {}
-// });
-
-</script>
 @section('content')
     <div>
         <p class="total">
@@ -100,4 +81,7 @@ $title = '投稿一覧';
 }
 </style>
 
+<script src="{{ asset('/js/report.js') }}"></script>
 @endsection
+
+
