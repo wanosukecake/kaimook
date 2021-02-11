@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // 目標期限切れ日次バッチ
         $schedule->command('command:goal')
-                 ->everyMinute()
-                //  ->daily()
+                //  ->everyMinute()
+                 ->daily()
                  ->appendOutputTo(dirname(dirname(dirname(__FILE__))) . '/storage/logs/GoalBatch.log')
                  ->onSuccess(function () {
                     Log::info('command:goal success!');
