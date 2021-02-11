@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Goal extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'type', 'progress'
+        'type', 'goal', 'progress'
     ];
 
     protected static function boot()
     {
         parent::boot();
-        // 保存時user_idをログインユーザーに設定
         self::saving(function($post) {
             $post->user_id = \Auth::id();
+            $post->is_expired = 0;
         });
     }
 
@@ -26,6 +27,12 @@ class Goal extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // 期限が切れていないもののみ取得
+    public function scopeNotExpired(Builder $query)
+    {
+        return $query->where('is_expired', 0);
     }
 
 }

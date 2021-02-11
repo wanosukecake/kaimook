@@ -8,7 +8,14 @@ $title = '目標';
 </div>
 
 @section('content')
-
+    <div class="card">
+        <div class="card-body">
+            {{ Form::open(['route' => 'back.goals.store']) }}
+                @include('back.goals._form')
+            {{ Form::close() }}
+        </div>
+    </div>
+    <script src="{{ asset('/js/goal.js') }}"></script>
 @endsection
 
 

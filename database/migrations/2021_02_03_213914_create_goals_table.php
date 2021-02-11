@@ -17,8 +17,9 @@ class CreateGoalsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->integer('type')->length(1)->default(0);
-            $table->integer('progress')->length(100)->default(0);
-
+            $table->integer('goal')->length(5)->default(0);
+            $table->integer('progress')->length(3)->default(0);
+            $table->integer('is_expired')->length(3)->default(0);
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GoalRequest;
 use App\Models\Goal;
 use App\Services\GoalService;
 use Illuminate\Http\Request;
@@ -21,18 +22,8 @@ class GoalController extends Controller
      */
     public function index()
     {
+        // TODO:存在チェックをし、存在していたら削除ボタンを出す判定処理を追加
         return view('back.goals.index');
-        // $this->reportService->getReportsList();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -41,9 +32,18 @@ class GoalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GoalRequest $request)
     {
-        //
+        $goal = $this->goalService->save($request);
+        if ($goal) {
+            return redirect()
+                ->route('back.goals.index', $goal)
+                ->withSuccess('データを登録しました。');
+        } else {
+            return redirect()
+                ->route('back.goals.index')
+                ->withError('データの登録に失敗しました。');
+        }
     }
 
     /**
