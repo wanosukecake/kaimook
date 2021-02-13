@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\GoalService;
+use Illuminate\Support\Facades\Log;
 
 class GoalBatch extends Command
 {
