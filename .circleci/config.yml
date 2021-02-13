@@ -38,6 +38,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run: composer update --lock
+
       - run: composer install -n --prefer-dist
 
       - save_cache:
