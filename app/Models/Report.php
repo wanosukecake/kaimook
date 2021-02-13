@@ -55,6 +55,4 @@ class Report extends Model
     {
         return $query->public()->where('user_id',$userId)->findOrFail($id);
     }
-
-
 }

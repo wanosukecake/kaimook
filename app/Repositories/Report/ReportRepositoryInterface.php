@@ -11,4 +11,7 @@ interface ReportRepositoryInterface
     public function save($request);
 
     public function update($request);
+
+    public function getReportsByFromTo($user_id, $where, $from, $to, $format);
+
 }

@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\GoalBatch::class
     ];
 
     /**
@@ -24,7 +25,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // 目標期限切れ日次バッチ
+        $schedule->command('command:goal')
+                //  ->everyMinute()
+                 ->daily()
+                 ->appendOutputTo(dirname(dirname(dirname(__FILE__))) . '/storage/logs/GoalBatch.log')
+                 ->onSuccess(function () {
+                    Log::info('command:goal success!');
+                 })
+                 ->onFailure(function () {
+                    Log::error('command:goal error');
+                 });
     }
 
     /**
