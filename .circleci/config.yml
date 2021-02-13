@@ -8,8 +8,8 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/php:7.2
-      - image: circleci/mysql:9.4
-      #- image: circleci/mysql:5.7
+      #- image: circleci/mysql:9.4
+      - image: circleci/mysql:5.7
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
