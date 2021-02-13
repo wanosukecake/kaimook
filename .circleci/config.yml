@@ -56,6 +56,10 @@ jobs:
 
       #heroku deploy
       - deploy:
+          filters:
+            branches:
+              only:
+                - main
           name: Deploy Master to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
