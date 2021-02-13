@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Date;
+use Carbon\CarbonImmutable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +20,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Report\ReportRepositoryInterface::class,
             \App\Repositories\Report\ReportRepository::class
         );
-        // $this->app->bind('App\Services\ReportService'); 
+        $this->app->bind(
+            \App\Repositories\Goal\GoalRepositoryInterface::class,
+            \App\Repositories\Goal\GoalRepository::class
+        );
+        Date::use(CarbonImmutable::class);
 
     }
 
@@ -30,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        // 本番環境(Heroku)でhttpsを強制する
+        if (\App::environment('production')) {
+            \URL::forceScheme('https');
+        }
     }
 }

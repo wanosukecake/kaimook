@@ -1,7 +1,10 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-// /admin
+// admin
 Route::get('/', 'DashboardController@index')->name('dashboard');
 Route::resource('reports', 'ReportController');
+Route::get('/get-index-graph-data', 'ReportController@getIndexGraphData');
+Route::resource('goals', 'GoalController');
+
 Route::resource('posts', 'PostController')->except('show');

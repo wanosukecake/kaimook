@@ -112,6 +112,6 @@
 <div class="form-group row">
     <div class="col-sm-10">
         <button type="submit" class="btn btn-primary">保存</button>
-        {{ link_to_route('back.posts.index', '一覧へ戻る', null, ['class' => 'btn btn-secondary']) }}
+        {{ link_to_route('back.reports.index', '一覧へ戻る', null, ['class' => 'btn btn-secondary']) }}
     </div>
 </div>

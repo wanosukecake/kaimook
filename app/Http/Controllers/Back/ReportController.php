@@ -27,7 +27,21 @@ class ReportController extends Controller
     public function index()
     {
         $reports = $this->reportService->getReportsList();
-        return view('back.reports.index', compact('reports'));
+        return response(view('back.reports.index', compact('reports')))
+        ->withHeaders([
+            'Cache-Control' => 'no-store',
+        ]);
+    }
+
+    /**
+     * return graph data.
+     * @return json \Illuminate\Http\Response
+     */
+    public function getIndexGraphData() 
+    {
+        $data = $this->reportService->getIndexGraphData();
+
+        return response()->json($data);
     }
 
     /**
@@ -65,31 +79,48 @@ class ReportController extends Controller
     public function store(ReportRequest $request)
     {
         //
-        $result = $this->reportService->save($request);
-        dd($result);
+        $report = $this->reportService->save($request);
+        if ($report) {
+            return redirect()
+                ->route('back.reports.edit', $report)
+                ->withSuccess('データを登録しました。');
+        } else {
+            return redirect()
+                ->route('back.reports.create')
+                ->withError('データの登録に失敗しました。');
+        }
+
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * edit the form for editing the specified resource.
      *
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
     public function edit(Report $report)
     {
-        //
+        return view('back.reports.edit', compact('report'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Report $report)
+    public function update(ReportRequest $request)
     {
-        //
+        $report = $this->reportService->update($request);
+        if ($report) {
+            $flash = ['success' => 'データを更新しました。'];
+        } else {
+            $flash = ['success' => 'データ更新に失敗しました。'];
+        }
+
+        return redirect()
+        ->route('back.reports.edit', $report)
+        ->with($flash);
     }
 
     /**
