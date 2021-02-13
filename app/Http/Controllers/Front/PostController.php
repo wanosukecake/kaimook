@@ -50,6 +50,7 @@ class PostController extends Controller
      */
     public function show(int $id)
     {
+
         $post = Post::PublicFindById($id);
         return view('front.posts.show', compact('post'));
     }
