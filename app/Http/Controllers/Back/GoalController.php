@@ -22,8 +22,13 @@ class GoalController extends Controller
      */
     public function index()
     {
+        $is_goal_exist = true;
+        $goal = $this->goalService->getGoalData();        
+        if (!$goal) {
+            $is_goal_exist = false; 
+        }
         // TODO:存在チェックをし、存在していたら削除ボタンを出す判定処理を追加
-        return view('back.goals.index');
+        return view('back.goals.index', compact('is_goal_exist'));
     }
 
     /**
@@ -66,6 +71,17 @@ class GoalController extends Controller
     public function edit(Goal $goal)
     {
         //
+    }
+
+    /**
+     * return graph data.
+     * @return json \Illuminate\Http\Response
+     */
+    public function getIndexGraphData() 
+    {
+        $data = $this->goalService->getIndexGraphData();
+
+        return response()->json($data);
     }
 
     /**

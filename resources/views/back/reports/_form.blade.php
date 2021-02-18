@@ -88,7 +88,28 @@
         @endforeach
     </div>
 </div>
- 
+
+<div class="form-group row">
+    {{ Form::label('type', '種類', ['class' => 'col-sm-2 col-form-label']) }}
+    <div class="col-sm-10">
+        {{ Form::select(
+            'type',
+            config('const.Goal'),
+            null, 
+            [
+                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
+                'id' => '',
+                'style' => ''
+            ]) 
+        }}
+        @error('type')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+</div>
+
 <div class="form-group row">
     {{ Form::label('published_at', '公開日', ['class' => 'col-sm-2 col-form-label']) }}
     <div class="col-sm-10">

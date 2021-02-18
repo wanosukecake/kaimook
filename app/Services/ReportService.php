@@ -1,18 +1,24 @@
 <?php
 namespace App\Services;
 
+use Auth;
 use App\Services\BaseService;
 use App\Repositories\Report\ReportRepositoryInterface;
-use Auth;
-use Carbon\CarbonImmutable as Carbon; 
+use App\Repositories\Goal\GoalRepositoryInterface;
+use Carbon\CarbonImmutable as Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ReportService extends BaseService
 {
     protected $report;
 
-    public function __construct(ReportRepositoryInterface $reportRepositoryInterface)
+    protected $goal;
+
+    public function __construct(ReportRepositoryInterface $reportRepositoryInterface, GoalRepositoryInterface $goalRepositoryInterface)
     {
         $this->report = $reportRepositoryInterface;
+        $this->goal = $goalRepositoryInterface;
+
     }
 
     /**
@@ -89,13 +95,30 @@ class ReportService extends BaseService
     }
 
     /**
-     * レポートを登録
+     * レポートと目標達成率を更新する。
      * @param  object  $request
      * @return 
      */
     public function save($request)
     {
-        $report = $this->report->save($request->all());
+        // DB::beginTransaction();
+        // // try {
+            $report = $this->report->save($request->all());
+            $goal = $this->goal->getGoalData(Auth::id());
+            // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
+            if ($goal['type'] == $report->type) {
+                // 登録直前の進捗率を退避
+                $progress = $goal['progress'];
+                // 目標に対する進捗率を計算TODO:
+                // $progress = $report[] / 
+                dd($goal);
+            }
+            dump($report->type);
+            dd($goal->type);
+            // DB::commit();
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        // }
         return $report;
     }
 

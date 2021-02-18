@@ -52,4 +52,13 @@ class GoalService extends BaseService
         }
         return true;
     }
+
+    /**
+     * 目標の画面グラフ描画用にデータ取得
+     * @return array $result
+     */
+    public function getIndexGraphData()
+    {
+
+    }
 }

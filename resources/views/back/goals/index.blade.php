@@ -1,21 +1,21 @@
 <?php
-$title = '目標';
+    $title = '目標';
 ?>
 @extends('back.layouts.base')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<div class="graph" style="width:600px;">
-    <canvas id="myChart"></canvas>
-</div>
-
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            {{ Form::open(['route' => 'back.goals.store']) }}
-                @include('back.goals._form')
-            {{ Form::close() }}
+    @if (!$is_goal_exist) 
+        <div class="card">
+            <div class="card-body">
+                {{ Form::open(['route' => 'back.goals.store']) }}
+                    @include('back.goals._form')
+                {{ Form::close() }}
+            </div>
         </div>
-    </div>
-    <script src="{{ asset('/js/goal.js') }}"></script>
+    @else
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <div class="graph" style="width:600px;">
+            <canvas id="goalChart"></canvas>
+        </div>
+        <script src="{{ asset('/js/goal.js') }}"></script>
+    @endif
 @endsection
-
-

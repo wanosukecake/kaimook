@@ -78,7 +78,7 @@ class ReportController extends Controller
      */
     public function store(ReportRequest $request)
     {
-        //
+        // TODO:トランザクション入れる。
         $report = $this->reportService->save($request);
         if ($report) {
             return redirect()

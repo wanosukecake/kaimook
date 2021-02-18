@@ -9,7 +9,7 @@ class GoalRepository implements GoalRepositoryInterface
 {
     public function getGoalData($user_id) 
     {
-        $result = Goal::with('user')->NotExpired()->get();
+        $result = Goal::with('user')->NotExpired()->first();
         return $result;
     }
 
