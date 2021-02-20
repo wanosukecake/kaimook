@@ -2,15 +2,13 @@
 $title = '投稿一覧';
 ?>
 @extends('back.layouts.base')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<div class="graph" style="width:600px;">
-    <canvas id="myChart"></canvas>
-</div>
-
-<canvas id="dailyChart"></canvas>
-
-
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <div class="graph" style="width:600px;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <canvas id="dailyChart"></canvas>
     <div>
         <p class="total">
             今日の勉強時間は <br>

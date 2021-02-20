@@ -24,9 +24,11 @@ class GoalController extends Controller
     {
         $is_goal_exist = true;
         $goal = $this->goalService->getGoalData();        
+        // TODO:ここ多分バグ、ない時の判定がうまくいってない
         if (!$goal) {
             $is_goal_exist = false; 
         }
+
         // TODO:存在チェックをし、存在していたら削除ボタンを出す判定処理を追加
         return view('back.goals.index', compact('is_goal_exist'));
     }

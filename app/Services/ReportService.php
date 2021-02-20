@@ -111,10 +111,10 @@ class ReportService extends BaseService
                 $progress = $goal['progress'];
                 // 目標に対する進捗率を計算TODO:
                 // $progress = $report[] / 
-                dd($goal);
+                // dd($goal);
             }
-            dump($report->type);
-            dd($goal->type);
+            // dump($report->type);
+            // dd($goal->type);
             // DB::commit();
         // } catch (\Exception $e) {
         //     DB::rollback();
