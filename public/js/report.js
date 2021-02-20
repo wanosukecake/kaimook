@@ -1,52 +1,49 @@
 $(function(){
 
-  let url = '/admin/get-index-graph-data';
-  let data = "";
-  let doneFunc = function (response) {
-    let ctx = document.getElementById('myChart').getContext('2d');
-    let chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
-        // The data for our dataset
-        data: {
-            labels: response.label,
-            datasets: [{
-                label: '今週の勉強時間',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: response.data
-            }]
-        },
+    let url = '/admin/get-index-graph-data';
+    let data = "";
+    let doneFunc = function (response) {
+        let options = {
+                scales: {
+                yAxes: [{
+                    ticks: {
+                        userCallback: function(tick) {
+                            return tick.toString() + '時間';
+                        }
+                    },
+                }]
+            }
+        }
+        $(this).describeGraph('myChart', 'bar', '今週の勉強時間', 'rgb(255, 99, 132)', options, response);
+  　};
 
-        // Configuration options go here
-        options: {
-          scales: {
-            // xAxes: [{
-            //     scaleLabel: {
-            //         display: true,
-            //         labelString: '月'
-            //     }
-            // }],
-            yAxes: [{
-                ticks: {
-                    // min: 300,
-                    userCallback: function(tick) {
-                        return tick.toString() + '時間';
-                    }
-                },
-                // scaleLabel: {
-                //     display: true,
-                //     labelString: '台数'
-                // }
-            }]
-        },
+    if (document.getElementById('myChart')) {
+        $(this).ajaxRequest(doneFunc, data, url, 'get')
+    }
 
-
-
+    // 作業量フォーム部分
+    $('[name=type]').change(function() {
+        let typeVal = $(this).val();
+        if (typeVal != 1) {
+            $(".time").addClass('none');
+            $(".number").removeClass('none');
+            $(".time select").prop('disabled', true);
+            $(".number input").prop('disabled', false);
+            if (typeVal == 2) {
+                // ページの時
+                $(".unit").text('ページまで')
+            } else if (typeVal == 3) {
+                // 章の時
+                $(".unit").text('章まで')
+            } else if (typeVal == 4) {
+                // レッスンの時
+                $(".unit").text('レッスンまで')
+            }
+        } else {
+            $(".time select").prop('disabled', false);
+            $(".number input").prop('disabled', true);
+            $(".time").removeClass('none');
+            $(".number").addClass('none');           
         }
     });
-  };
-
-  $(this).ajaxRequest(doneFunc, data, url, 'get')
-
 });

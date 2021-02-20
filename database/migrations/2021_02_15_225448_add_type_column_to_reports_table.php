@@ -14,9 +14,13 @@ class AddTypeColumnToReportsTable extends Migration
     public function up()
     {
         Schema::table('reports', function (Blueprint $table) {
-            $table->integer('type')
+            $table->integer('number')
                     ->length(1)
                     ->after('minutes')
+                    ->nullable();
+            $table->integer('type')
+                    ->length(1)
+                    ->after('number')
                     ->nullable();
         });
     }
@@ -30,6 +34,7 @@ class AddTypeColumnToReportsTable extends Migration
     {
         Schema::table('reports', function (Blueprint $table) {
             $table->dropColumn('type');
+            $table->dropColumn('number');
         });
     }
 }

@@ -33,7 +33,7 @@
             </div>
         @enderror
     </div>
-    <div class="unit" style="line-height:40px;">を終わらせる</div>
+    <div class="unit" style="line-height:40px;">時間まで</div>
 </div>
 
 <div class="form-group row">

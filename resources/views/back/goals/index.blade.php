@@ -3,7 +3,8 @@
 ?>
 @extends('back.layouts.base')
 @section('content')
-    @if (!$is_goal_exist) 
+    @if (!$is_goal_exist)
+        <h2 class="section-title">目標の登録</h2>
         <div class="card">
             <div class="card-body">
                 {{ Form::open(['route' => 'back.goals.store']) }}
@@ -12,9 +13,10 @@
             </div>
         </div>
     @else
+        <h2 class="section-title">目標の確認</h2>
         <div class="graph" style="width:600px;">
             <canvas id="goalChart"></canvas>
         </div>
-        <script src="{{ asset('/js/goal.js') }}"></script>
     @endif
+    <script src="{{ asset('/js/goal.js') }}"></script>
 @endsection

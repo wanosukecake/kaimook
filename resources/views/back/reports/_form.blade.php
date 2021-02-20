@@ -12,15 +12,21 @@
         @enderror
     </div>
 </div>
- 
+
 <div class="form-group row">
-    {{ Form::label('body', '内容', ['class' => 'col-sm-2 col-form-label']) }}
+    {{ Form::label('type', '種類', ['class' => 'col-sm-2 col-form-label']) }}
     <div class="col-sm-10">
-        {{ Form::textarea('body', null, [
-            'class' => 'form-control' . ($errors->has('body') ? ' is-invalid' : ''),
-            'rows' => 5
-        ]) }}
-        @error('body')
+        {{ Form::select(
+            'type',
+            config('const.Goal'),
+            null, 
+            [
+                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
+                'id' => '',
+                'style' => ''
+            ]) 
+        }}
+        @error('type')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
@@ -28,15 +34,15 @@
     </div>
 </div>
  
-<div class="form-group row">
-    {{ Form::label('hour', '時/分', ['class' => 'col-sm-2 col-form-label']) }}
-    <div class="col-sm-10">
+<div class="form-group row time">
+    {{ Form::label('hour', '作業量', ['class' => 'col-sm-2 col-form-label']) }}
+    <div class="col-sm-2">
         {{ Form::select(
             'hour',
             config('const.Share.HOURS'),
             null, 
             [
-                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
+                'class' => 'form-control col-sm-12 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
                 'id' => '',
                 'style' => ''
             ]) 
@@ -46,15 +52,16 @@
                 {{ $message }}
             </div>
         @enderror
-
+    </div>
+    <div style="line-height:3; font-size:16px;">／</div>
+    <div class="col-sm-2">
         {{ Form::select(
             'minutes',
             config('const.Share.MINUTES'),
             null, 
             [
-                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
+                'class' => 'form-control col-sm-12 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
                 'id' => ''
-
             ]) 
         }}
         @error('minutes')
@@ -62,10 +69,41 @@
                 {{ $message }}
             </div>
         @enderror
-
     </div>
 </div>
 
+<div class="form-group row number none">
+    {{ Form::label('number', '作業量', ['class' => 'col-sm-2 col-form-label']) }}
+    <div class="col-sm-2">
+        {{ Form::text('number', null, [
+            'class' => 'form-control' . ($errors->has('body') ? ' is-invalid' : ''),
+            'rows' => 5
+        ]) }}
+        @error('body')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+    <div class="unit" style="line-height:40px;">時間まで</div>
+</div>
+
+
+
+<div class="form-group row">
+    {{ Form::label('body', 'メモ', ['class' => 'col-sm-2 col-form-label form-control-lg mb-3']) }}
+    <div class="col-sm-10">
+        {{ Form::textarea('body', null, [
+            'class' => 'form-control text-report' . ($errors->has('body') ? ' is-invalid' : ''),
+            'rows' => 5
+        ]) }}
+        @error('body')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+</div>
 
 <div class="form-group row">
     {{ Form::label('is_public', 'ステータス', ['class' => 'col-sm-2 col-form-label']) }}
@@ -86,27 +124,6 @@
                 @endif
             </div>
         @endforeach
-    </div>
-</div>
-
-<div class="form-group row">
-    {{ Form::label('type', '種類', ['class' => 'col-sm-2 col-form-label']) }}
-    <div class="col-sm-10">
-        {{ Form::select(
-            'type',
-            config('const.Goal'),
-            null, 
-            [
-                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
-                'id' => '',
-                'style' => ''
-            ]) 
-        }}
-        @error('type')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
     </div>
 </div>
 
@@ -136,3 +153,4 @@
         {{ link_to_route('back.reports.index', '一覧へ戻る', null, ['class' => 'btn btn-secondary']) }}
     </div>
 </div>
+<script src="{{ asset('/js/report.js') }}"></script>

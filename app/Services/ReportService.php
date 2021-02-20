@@ -75,8 +75,9 @@ class ReportService extends BaseService
 
         $result = [];
         // 分を時間に換算し、resultを整形
+        // TODO:intvalに変えて動作確認まだ
         foreach ($dailyMinutes as $key => $row) {
-            $result['data'][] = $dailyHours[$key] + floor($row / 60);
+            $result['data'][] = $dailyHours[$key] + intval($row / 60);
             $result['label'][] = $key;
         }
 
@@ -106,12 +107,31 @@ class ReportService extends BaseService
             $report = $this->report->save($request->all());
             $goal = $this->goal->getGoalData(Auth::id());
             // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
-            if ($goal['type'] == $report->type) {
+            // TODO:エラーハンドリング調査。goalがnullで来ることはあるか。
+            if (isset($goal) && $goal['type'] == $report->type) {
                 // 登録直前の進捗率を退避
                 $progress = $goal['progress'];
-                // 目標に対する進捗率を計算TODO:
-                // $progress = $report[] / 
-                // dd($goal);
+                switch ($goal['type']){
+                    case config('const.GoalType.TIME'):
+                        $total = $report->hour + intval($report->minute / 60);
+                        $calculate_progress = $progress + intval(($total / $goal['goal']) * 100);
+                        $data = ['progress' => $calculate_progress]; 
+                        break;
+
+                    case config('const.GoalType.PAGE'):
+                    case config('const.GoalType.CHAPTER'):
+                    case config('const.GoalType.LESSON'):
+                        $calculate_progress = $progress + intval(($report->number / $goal['goal']) * 100);
+                        $data = ['progress' => $calculate_progress]; 
+                        break;
+
+                    default:
+                        break;
+                }
+
+                // 目標に対する進捗率を更新
+                $this->goal->updateById($goal['id'], $data);
+
             }
             // dump($report->type);
             // dd($goal->type);
@@ -119,6 +139,7 @@ class ReportService extends BaseService
         // } catch (\Exception $e) {
         //     DB::rollback();
         // }
+        // TODO:リダイレクト後にeditに飛ばすなら以下を返さないとだめ。要検討
         return $report;
     }
 
@@ -144,7 +165,7 @@ class ReportService extends BaseService
     {
         $total_hour = $reports->whereBetween('created_at', [$from, $to])->sum('hour');
         $total_minute = $reports->whereBetween('created_at', [$from, $to])->sum('minutes');
-        $result = $total_hour + floor($total_minute / 60);
+        $result = $total_hour + intval($total_minute / 60);
 
         return $result;
     }
