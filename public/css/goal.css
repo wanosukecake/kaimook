@@ -1,0 +1,13 @@
+#goalChart {
+    float: left;
+}
+.now_progress {
+    font-weight: bold;
+    font-size: 32px;
+}
+.card {
+    margin-bottom: 0px;
+}
+.card-header h4 {
+    color:#6c757d !important;
+}

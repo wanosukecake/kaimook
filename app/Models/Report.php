@@ -46,8 +46,7 @@ class Report extends Model
         return $query
             ->public()
             ->latest('published_at')
-            ->where('user_id',$userId)
-            ->paginate(10);
+            ->where('user_id',$userId);
     }
 
     // 公開記事をIDで取得

@@ -59,6 +59,20 @@ class GoalService extends BaseService
      */
     public function getIndexGraphData()
     {
-
+        $goal = $this->getGoalData(Auth::id());
+        $not_achieved = 100 - $goal['progress'];
+        if ($not_achieved < 0) {
+            $not_achieved = 0;
+        }
+        return [
+            'data' => [
+                $goal['progress'], 
+                $not_achieved
+            ],
+            'label' => [
+                '達成率',
+                '未達率'
+            ]
+        ];
     }
 }

@@ -3,83 +3,159 @@ $title = '投稿一覧';
 ?>
 @extends('back.layouts.base')
 @section('content')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <div class="graph" style="width:600px;">
-        <canvas id="myChart"></canvas>
+    <h2 class="section-title">レポート一覧</h2>
+    <div class="row">
+        <div class="time-pannel col-lg-4 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-primary">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>今日の<br>勉強時間</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $reports['dailyTotal'] }} 時間
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="time-pannel col-lg-4 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-danger">
+                    <i class="far fa-newspaper"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>今週の<br>勉強時間</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $reports['weeklyTotal'] }} 時間
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="time-pannel col-lg-4 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-warning">
+                    <i class="fa fa-paint-brush"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>今月の<br>勉強時間</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $reports['monthlyTotal'] }} 時間
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <canvas id="dailyChart"></canvas>
-    <div>
-        <p class="total">
-            今日の勉強時間は <br>
-            <span class="total_number">{{ $reports['dailyTotal'] }}</span>時間です。
-        </p>
-
-        <p class="total">
-            今週の勉強時間は <br>
-            <span class="total_number">{{ $reports['weeklyTotal'] }}</span>時間です。
-        </p>
-
-        <p class="total">
-            今月の勉強時間は <br>
-            <span class="total_number">{{ $reports['monthlyTotal'] }}</span>時間です。
-        </p>
+    @forelse($reports['list'] as $report)
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>{{ $report['title']}}</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
+                        <li class="media">
+                        @if ( $report['type'] == config('const.GoalType.TIME'))
+                            <div class="media-pic bg-info">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        @elseif ($report['type'] == config("const.GoalType.PAGE"))
+                            <div class="media-pic bg-info">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        @elseif ($report['type'] == config("const.GoalType.CHAPTER"))
+                            <div class="media-pic bg-info">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        @elseif ($report['type'] == config("const.GoalType.LESSON"))
+                            <div class="media-pic bg-info">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        @endif                            
+                        <div class="media-body">
+                            <div class="media-title mb-1">{{ config("const.Goal.".$report['type']) }}</div>
+                            <div class="text-time">{{ $report['created_at']?? "-" }}</div>
+                            <div class="media-description text-muted">
+                                {{ $report['body']?? "-" }}
+                            </div>
+                            <div class="media-links">
+                                <a href="#">詳細</a>
+                            <div class="bullet"></div>
+                                <a href="#">編集</a>
+                            <div class="bullet"></div>
+                                <a href="#" class="text-danger">削除</a>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="clear_fix"></div>
+    @empty
+        <p>数字なし</p>
+    @endforelse
+    <div class="pager">
+        {{ $reports['list']->links() }}
+    </div>
+    
 
-    <div class="card">
-        <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">id</th>
-            <th scope="col" class="content_th">内容</th>
-            <th scope="col">時間</th>
-            <th scope="col">詳細</th>
-            <th scope="col">編集</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($reports['list'] as $report)
-                <tr>
-                    <td>{{ $report->id }}</td>
-                    <td>{{ $report->body }}</td>
-                    <td>{{ $report->hour }}時間{{ $report->hour }}分</td>
-                    <td>
-                    {{ link_to_route('back.reports.show', '詳細', $report, [
-                                'class' => 'btn btn-info',
-                                'target' => '_new']) }}
-                    </td>
-                    <td>
-                    {{ link_to_route('back.reports.edit', '編集', $report, [
-                                'class' => 'btn btn-info',
-                                'target' => '_new']) }}
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-        </table>
-    </div> 
-    
-    
 <style>
-.clear_fix {
-    clear:both;
-}
-.total {
-    float:left;
-    border: 1px solid;
-    margin-left: 180px;
-}
-.total_number {
-    font-size: 25px;
-    color:red;
-}
-.content_th {
-    width: 750px;
-}
+        .media-pic {
+            width: 80px;
+            height: 110px;
+            margin-right: 15px;
+            border-radius: 3px;
+            line-height: 110px;
+            font-style: normal;
+            text-align: center;
+        }
+        .fa-newspaper {
+            font-size: 22px;
+            color: #fff;
+        }
+        .fa-pencil-square {
+            font-size: 22px;
+            color: #fff;    
+        }
+        /* 教材 */
+        .fa-edit {
+            font-size: 22px;
+            color: #fff;
+        }
+        .clear_fix {
+            clear:both;
+        }
+        .total {
+            float:left;
+            border: 1px solid;
+            margin-left: 180px;
+        }
+        .total_number {
+            font-size: 25px;
+            color:red;
+        }
+        .content_th {
+            width: 750px;
+        }
+        .fa-book {
+            font-size: 22px;
+            color: #fff;
+        }
+        .fa-paint-brush {
+            font-size: 22px;
+            color: #fff;
+        }
+        .pager {
+            margin-left: 200px;
+        }
 </style>
 
 <script src="{{ asset('/js/report.js') }}"></script>
 @endsection
-
-

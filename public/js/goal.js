@@ -1,14 +1,24 @@
 $(function(){
 
-    let options ={
-        title: {
-            display: true,
-            text: '週間目標達成率'
-        }
+    let url = '/admin/get-goal-graph-data';
+    let data = "";
+    let doneFunc = function (response) {
+        console.log(response)
+        let options ={
+            title: {
+                display: true,
+                text: '週間目標達成率'
+            }
+        };
+        $(this).describeGraph('goalChart', 'doughnut', ['rgb(255, 160, 122)','rgb(112, 128, 144)'], options, response);
     };
-    let response ="";
-    $(this).describeGraph('goalChart', 'doughnut', ['達成率','未達率'], ['rgb(255, 160, 122)','rgb(112, 128, 144)'], options, response);
-//         let ctx = document.getElementById('goalChart').getContext('2d');
+    
+    if (document.getElementById('goalChart')) {
+        $(this).ajaxRequest(doneFunc, data, url, 'get')
+    }
+
+
+    //         let ctx = document.getElementById('goalChart').getContext('2d');
 //         let chart = new Chart(ctx, {
 //             // The type of chart we want to create
 //             type: 'doughnut',

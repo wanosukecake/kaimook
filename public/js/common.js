@@ -37,7 +37,7 @@
         $('#loading_box').remove();
     }
 
-    $.fn.describeGraph = function (id, type, label, backgroundColor, options={}, response) {
+    $.fn.describeGraph = function (id, type, backgroundColor, options={}, response) {
         if (document.getElementById(id)) {
             let ctx = document.getElementById(id).getContext('2d');
             let chart = new Chart(ctx, {
@@ -45,7 +45,7 @@
                 data: {
                     labels: response.label,
                     datasets: [{
-                        label: label,
+                        label: response.label,
                         backgroundColor: backgroundColor,
                         // borderColor: 'rgb(255, 99, 132)',
                         data: response.data

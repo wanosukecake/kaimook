@@ -14,9 +14,23 @@
         </div>
     @else
         <h2 class="section-title">目標の確認</h2>
-        <div class="graph" style="width:600px;">
-            <canvas id="goalChart"></canvas>
+        <div class="row">
+            <div class="col-lg-7 col-md-12 col-12 col-sm-12">
+                <div class="graph">
+                    <canvas id="goalChart"></canvas>
+                </div>
+            </div>
+            <div class="card col-lg-5 col-md-12 col-12 col-sm-12">
+                <div class="card-header">
+                    <h4>週間目標</h4>
+                </div>
+                <div class="card-body">
+                    <p>今週の達成率は<span class="now_progress">{{ $goal['progress'] }}</span>%です</p>
+                    <p>※作成した目標は、目標期間終了翌日の0時にリセットされます。</p>
+                </div>
+            </div>
         </div>
     @endif
     <script src="{{ asset('/js/goal.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/goal.css') }}">
 @endsection
