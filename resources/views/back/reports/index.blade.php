@@ -38,7 +38,7 @@ $title = '投稿一覧';
         <div class="time-pannel col-lg-4 col-md-6 col-sm-6 col-12">
             <div class="card card-statistic-1">
                 <div class="card-icon bg-warning">
-                    <i class="fa fa-paint-brush"></i>
+                    <i class="far fa-calendar-alt"></i>
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
@@ -63,24 +63,28 @@ $title = '投稿一覧';
                     <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
                         <li class="media">
                         @if ( $report['type'] == config('const.GoalType.TIME'))
-                            <div class="media-pic bg-info">
-                                <i class="fa fa-book"></i>
+                            <div class="media-pic report-time bg-info">
+                                <i class="far fa-clock"></i>
                             </div>
                         @elseif ($report['type'] == config("const.GoalType.PAGE"))
-                            <div class="media-pic bg-info">
-                                <i class="fa fa-book"></i>
+                            <div class="media-pic report-page">
+                                <i class="far fa-file-alt"></i>
                             </div>
                         @elseif ($report['type'] == config("const.GoalType.CHAPTER"))
-                            <div class="media-pic bg-info">
-                                <i class="fa fa-book"></i>
+                            <div class="media-pic report-chapter">
+                                <i class="fas fa-scroll"></i>
                             </div>
                         @elseif ($report['type'] == config("const.GoalType.LESSON"))
-                            <div class="media-pic bg-info">
-                                <i class="fa fa-book"></i>
+                            <div class="media-pic report-lesson">
+                                <i class="far fa-comments"></i>
                             </div>
                         @endif                            
                         <div class="media-body">
-                            <div class="media-title mb-1">{{ config("const.Goal.".$report['type']) }}</div>
+                            @if ($report['type'] == config('const.GoalType.TIME'))
+                                <div class="media-title mb-1">{{ $report['hour']?? '0' }}時間 {{ $report['minute']?? '0' }} 分</div>
+                            @else                      
+                                <div class="media-title mb-1">{{ $report['number'] . config("const.Goal.". $report['type']) }}</div>
+                            @endif 
                             <div class="text-time">{{ $report['created_at']?? "-" }}</div>
                             <div class="media-description text-muted">
                                 {{ $report['body']?? "-" }}
@@ -88,7 +92,7 @@ $title = '投稿一覧';
                             <div class="media-links">
                                 <a href="#">詳細</a>
                             <div class="bullet"></div>
-                                <a href="#">編集</a>
+                                <a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">編集</a>
                             <div class="bullet"></div>
                                 <a href="#" class="text-danger">削除</a>
                             </div>
@@ -104,58 +108,6 @@ $title = '投稿一覧';
     <div class="pager">
         {{ $reports['list']->links() }}
     </div>
-    
-
-<style>
-        .media-pic {
-            width: 80px;
-            height: 110px;
-            margin-right: 15px;
-            border-radius: 3px;
-            line-height: 110px;
-            font-style: normal;
-            text-align: center;
-        }
-        .fa-newspaper {
-            font-size: 22px;
-            color: #fff;
-        }
-        .fa-pencil-square {
-            font-size: 22px;
-            color: #fff;    
-        }
-        /* 教材 */
-        .fa-edit {
-            font-size: 22px;
-            color: #fff;
-        }
-        .clear_fix {
-            clear:both;
-        }
-        .total {
-            float:left;
-            border: 1px solid;
-            margin-left: 180px;
-        }
-        .total_number {
-            font-size: 25px;
-            color:red;
-        }
-        .content_th {
-            width: 750px;
-        }
-        .fa-book {
-            font-size: 22px;
-            color: #fff;
-        }
-        .fa-paint-brush {
-            font-size: 22px;
-            color: #fff;
-        }
-        .pager {
-            margin-left: 200px;
-        }
-</style>
-
-<script src="{{ asset('/js/report.js') }}"></script>
+    <script src="{{ asset('/js/report.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/report.css') }}">
 @endsection

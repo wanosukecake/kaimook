@@ -77,16 +77,17 @@ class ReportController extends Controller
     public function store(ReportRequest $request)
     {
         // TODO:トランザクション入れる。
-        $report = $this->reportService->save($request);
-        if ($report) {
-            return redirect()
-                ->route('back.reports.edit', $report)
-                ->withSuccess('データを登録しました。');
+        $result = $this->reportService->save($request);
+        if ($result) {
+            $flash = ['success' => 'レポートを更新しました。'];
         } else {
+            $flash = ['success' => 'レポート更新に失敗しました。'];
             return redirect()
-                ->route('back.reports.create')
-                ->withError('データの登録に失敗しました。');
+            ->route('back.reports.index')
+            ->with($flash);
         }
+
+
 
     }
 
@@ -111,13 +112,13 @@ class ReportController extends Controller
     {
         $report = $this->reportService->update($request);
         if ($report) {
-            $flash = ['success' => 'データを更新しました。'];
+            $flash = ['success' => 'レポートを更新しました。'];
         } else {
-            $flash = ['success' => 'データ更新に失敗しました。'];
+            $flash = ['success' => 'レポート更新に失敗しました。'];
         }
 
         return redirect()
-        ->route('back.reports.edit', $report)
+        ->route('back.reports.index')
         ->with($flash);
     }
 

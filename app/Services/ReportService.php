@@ -18,7 +18,6 @@ class ReportService extends BaseService
     {
         $this->report = $reportRepositoryInterface;
         $this->goal = $goalRepositoryInterface;
-
     }
 
     /**
@@ -93,8 +92,10 @@ class ReportService extends BaseService
      */
     public function save($request)
     {
-        // DB::beginTransaction();
-        // // try {
+        DB::beginTransaction();
+        try {
+            // TODO:削除対応のため、ここの保存は最後にやり、postDataとして使って目標保存後にレポートを
+            // 登録するよう変更added_progess
             $report = $this->report->save($request->all());
             $goal = $this->goal->getGoalData(Auth::id());
             // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
@@ -119,19 +120,16 @@ class ReportService extends BaseService
                     default:
                         break;
                 }
-
                 // 目標に対する進捗率を更新
                 $this->goal->updateById($goal['id'], $data);
-
             }
-            // dump($report->type);
-            // dd($goal->type);
-            // DB::commit();
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        // }
-        // TODO:リダイレクト後にeditに飛ばすなら以下を返さないとだめ。要検討
-        return $report;
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+
+        return true;
     }
 
     /**
