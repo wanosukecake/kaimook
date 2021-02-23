@@ -3,7 +3,6 @@
 namespace App\Repositories\Report;
 
 use App\Models\Report;
-use Carbon\CarbonImmutable as Carbon;
 
 class ReportRepository implements ReportRepositoryInterface
 {   
@@ -22,8 +21,10 @@ class ReportRepository implements ReportRepositoryInterface
         return $result;
     }
 
-    public function update($request) {
-        $result = Report::create($request);
+    public function update($report, $user_id) {
+        $result = Report::where('id', $report['id'])
+                        ->where('user_id', $user_id)
+                        ->update($report);
         return $result;
     }
 
@@ -45,4 +46,10 @@ class ReportRepository implements ReportRepositoryInterface
         // dd($result);
     }
 
+    public function delete($report, $user_id) {
+        $result = Report::where('id', $report['id'])
+                        ->where('user_id',$user_id)
+                        ->delete();
+        return $result;
+    }
 }

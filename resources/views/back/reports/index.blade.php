@@ -89,12 +89,20 @@ $title = '投稿一覧';
                             <div class="media-description text-muted">
                                 {{ $report['body']?? "-" }}
                             </div>
-                            <div class="media-links">
+                            <div class="row media-links">
                                 <a href="#">詳細</a>
                             <div class="bullet"></div>
                                 <a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">編集</a>
                             <div class="bullet"></div>
-                                <a href="#" class="text-danger">削除</a>
+                            {{ Form::model($report, [
+                                'route' => ['back.reports.destroy', $report],
+                                'method' => 'delete'
+                            ]) }}
+                            {{ Form::submit('削除', [
+                                    'onclick' => "return confirm('本当に削除しますか?')",
+                                    'class' => 'text-danger delete-report'
+                                ]) }}
+                            {{ Form::close() }}
                             </div>
                         </div>
                     </ul>

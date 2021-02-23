@@ -39,3 +39,10 @@
 .card-body {
     padding: 0.7rem !important;
 }
+
+.delete-report {
+    font-size: 14px;
+    border: none;
+    background-color: white;
+    padding-left: 0px;
+}

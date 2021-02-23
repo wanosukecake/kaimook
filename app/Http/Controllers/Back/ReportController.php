@@ -76,19 +76,19 @@ class ReportController extends Controller
      */
     public function store(ReportRequest $request)
     {
-        // TODO:トランザクション入れる。
         $result = $this->reportService->save($request);
+        // 更新失敗時のリダイレクト先はどうするか。
         if ($result) {
-            $flash = ['success' => 'レポートを更新しました。'];
+            $flash = ['success' => 'レポートを作成しました。'];
+            return redirect()
+            ->route('back.reports.index')
+            ->with($flash);
         } else {
-            $flash = ['success' => 'レポート更新に失敗しました。'];
+            $flash = ['error' => 'レポート更新に失敗しました。'];
             return redirect()
             ->route('back.reports.index')
             ->with($flash);
         }
-
-
-
     }
 
     /**
@@ -114,12 +114,12 @@ class ReportController extends Controller
         if ($report) {
             $flash = ['success' => 'レポートを更新しました。'];
         } else {
-            $flash = ['success' => 'レポート更新に失敗しました。'];
+            $flash = ['error' => 'レポート更新に失敗しました。'];
         }
 
         return redirect()
-        ->route('back.reports.index')
-        ->with($flash);
+            ->route('back.reports.index')
+            ->with($flash);
     }
 
     /**
@@ -130,6 +130,14 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        $result = $this->reportService->delete($report);
+        if ($result) {
+            $flash = ['success' => 'レポートを削除しました。'];
+        } else {
+            $flash = ['error' => 'レポート削除に失敗しました。'];
+        }
+        return redirect()
+            ->route('back.reports.index')
+            ->with($flash);
     }
 }

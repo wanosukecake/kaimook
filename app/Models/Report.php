@@ -11,7 +11,7 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'body', 'hour', 'minutes', 'number', 'type', 'is_public', 'published_at'
+        'title', 'body', 'hour', 'minutes', 'number', 'type', 'added_progress', 'is_public', 'published_at'
     ];
 
     protected $casts = [

@@ -29,7 +29,12 @@ class GoalService extends BaseService
      */
     public function save($request)
     {
-        $result = $this->goal->save(Auth::id(), $request->all());
+        $postData = $request->all();
+        $today = Carbon::today();
+        $postData['from'] = $today->format('Y-m-d');
+        $postData['to'] = $today->addWeek()->format('Y-m-d');
+
+        $result = $this->goal->save(Auth::id(), $postData);
         return $result;
     }
 
