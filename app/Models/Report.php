@@ -11,7 +11,7 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'body', 'hour', 'minutes', 'is_public', 'published_at'
+        'title', 'body', 'hour', 'minutes', 'number', 'type', 'added_progress', 'is_public', 'published_at'
     ];
 
     protected $casts = [
@@ -46,8 +46,7 @@ class Report extends Model
         return $query
             ->public()
             ->latest('published_at')
-            ->where('user_id',$userId)
-            ->paginate(10);
+            ->where('user_id',$userId);
     }
 
     // 公開記事をIDで取得

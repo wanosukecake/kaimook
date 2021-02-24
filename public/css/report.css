@@ -1,0 +1,48 @@
+.media-pic {
+    width: 80px;
+    height: 110px;
+    margin-right: 15px;
+    border-radius: 3px;
+    line-height: 110px;
+    font-style: normal;
+    text-align: center;
+}
+/* 日間 */
+.fa-book,
+/* 週間 */
+.fa-newspaper 
+/* 月間 */
+.fa-calendar-alt,
+/* 時間 */
+.fa-clock,
+/* ページ */
+.fa-file-alt,
+/* 章 */
+.fa-scroll,
+/* レッスン */
+.fa-comments {
+    font-size: 22px;
+    color: #fff;    
+}
+.report-page {
+    background-color: #00BB00;
+}
+.report-lesson {
+    background-color: #FFBBFF;
+}
+.report-chapter {
+    background-color:#800000;
+}
+.pager {
+    margin-left: 200px;
+}
+.card-body {
+    padding: 0.7rem !important;
+}
+
+.delete-report {
+    font-size: 14px;
+    border: none;
+    background-color: white;
+    padding-left: 0px;
+}

@@ -4,14 +4,15 @@ $title = '投稿編集';
 @extends('back.layouts.base')
  
 @section('content')
+    <h2 class="section-title">レポート編集</h2>
     <div class="card">
-        <div class="card-header">投稿編集</div>
         <div class="card-body">
             {!! Form::model($report, [
                 'route' => ['back.reports.update', $report],
                 'method' => 'put'
             ]) !!}
             @include('back.reports._form')
+            <input type='hidden' name='id' value='{{ $report->id }}'>
             {!! Form::close() !!}
         </div>
         <table class="table">

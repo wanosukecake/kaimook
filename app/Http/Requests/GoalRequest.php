@@ -24,6 +24,19 @@ class GoalRequest extends FormRequest
     public function rules()
     {
         return [
+            'type' => 'required|numeric|in:1,2,3,4',
+            'goal' => 'required|numeric|min:1|max:300',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'type' => '種類',
+            'goal' => '内容',
         ];
     }
 }

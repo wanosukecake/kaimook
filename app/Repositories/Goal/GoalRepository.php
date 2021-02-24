@@ -3,13 +3,12 @@
 namespace App\Repositories\Goal;
 
 use App\Models\Goal;
-use Carbon\CarbonImmutable as Carbon;
 
 class GoalRepository implements GoalRepositoryInterface
 {
     public function getGoalData($user_id) 
     {
-        $result = Goal::with('user')->NotExpired()->get();
+        $result = Goal::where('user_id', $user_id)->NotExpired()->first();
         return $result;
     }
 

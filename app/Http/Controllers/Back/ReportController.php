@@ -27,10 +27,8 @@ class ReportController extends Controller
     public function index()
     {
         $reports = $this->reportService->getReportsList();
-        return response(view('back.reports.index', compact('reports')))
-        ->withHeaders([
-            'Cache-Control' => 'no-store',
-        ]);
+        return response(view('back.reports.index', compact('reports')));
+        
     }
 
     /**
@@ -78,18 +76,19 @@ class ReportController extends Controller
      */
     public function store(ReportRequest $request)
     {
-        //
-        $report = $this->reportService->save($request);
-        if ($report) {
+        $result = $this->reportService->save($request);
+        // 更新失敗時のリダイレクト先はどうするか。
+        if ($result) {
+            $flash = ['success' => 'レポートを作成しました。'];
             return redirect()
-                ->route('back.reports.edit', $report)
-                ->withSuccess('データを登録しました。');
+            ->route('back.reports.index')
+            ->with($flash);
         } else {
+            $flash = ['error' => 'レポート更新に失敗しました。'];
             return redirect()
-                ->route('back.reports.create')
-                ->withError('データの登録に失敗しました。');
+            ->route('back.reports.index')
+            ->with($flash);
         }
-
     }
 
     /**
@@ -113,14 +112,14 @@ class ReportController extends Controller
     {
         $report = $this->reportService->update($request);
         if ($report) {
-            $flash = ['success' => 'データを更新しました。'];
+            $flash = ['success' => 'レポートを更新しました。'];
         } else {
-            $flash = ['success' => 'データ更新に失敗しました。'];
+            $flash = ['error' => 'レポート更新に失敗しました。'];
         }
 
         return redirect()
-        ->route('back.reports.edit', $report)
-        ->with($flash);
+            ->route('back.reports.index')
+            ->with($flash);
     }
 
     /**
@@ -131,6 +130,14 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        $result = $this->reportService->delete($report);
+        if ($result) {
+            $flash = ['success' => 'レポートを削除しました。'];
+        } else {
+            $flash = ['error' => 'レポート削除に失敗しました。'];
+        }
+        return redirect()
+            ->route('back.reports.index')
+            ->with($flash);
     }
 }
