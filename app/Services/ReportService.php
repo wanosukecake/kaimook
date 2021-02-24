@@ -99,29 +99,9 @@ class ReportService extends BaseService
             // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
             // TODO:エラーハンドリング調査。goalがnullで来ることはあるか。
             if (isset($goal) && $goal['type'] == $postData['type']) {
-                // 登録直前の進捗率を退避
-                $progress = $goal['progress'];
-                switch ($goal['type']) {
-                    case config('const.GoalType.TIME'):
-                        $total = $postData['hour'] + intval($postData['minutes'] / 60);
-                        $added_progress = intval(($total / $goal['goal']) * 100);
-                        $postData['added_progress'] = $added_progress;
-                        $calculate_progress = $progress + $added_progress;
-                        $data = ['progress' => $calculate_progress]; 
-                        break;
-
-                    case config('const.GoalType.PAGE'):
-                    case config('const.GoalType.CHAPTER'):
-                    case config('const.GoalType.LESSON'):
-                        $added_progress = intval(($postData['number'] / $goal['goal']) * 100);
-                        $postData['added_progress'] = $added_progress;
-                        $calculate_progress = $progress + $added_progress;
-                        $data = ['progress' => $calculate_progress]; 
-                        break;
-
-                    default:
-                        break;
-                }
+                $calc_progress = $this->calcProgress($goal, $postData);
+                $data = ['progress' => $calc_progress['progress']];
+                $postData['added_progress'] = $calc_progress['added_progress'];
                 // 目標に対する進捗率を更新
                 $this->goal->updateById($goal['id'], $data);
             }
