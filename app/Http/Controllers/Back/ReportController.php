@@ -77,7 +77,6 @@ class ReportController extends Controller
     public function store(ReportRequest $request)
     {
         $result = $this->reportService->save($request);
-        // 更新失敗時のリダイレクト先はどうするか。
         if ($result) {
             $flash = ['success' => 'レポートを作成しました。'];
             return redirect()

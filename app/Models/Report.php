@@ -45,7 +45,7 @@ class Report extends Model
     {
         return $query
             ->public()
-            ->latest('published_at')
+            ->latest('created_at')
             ->where('user_id',$userId);
     }
 
