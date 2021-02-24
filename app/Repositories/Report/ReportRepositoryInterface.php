@@ -10,7 +10,9 @@ interface ReportRepositoryInterface
 
     public function save($request);
 
-    public function update($request);
+    public function update($report, $user_id);
+
+    public function delete($report, $user_id);
 
     public function getReportsByFromTo($user_id, $where, $from, $to, $format);
 

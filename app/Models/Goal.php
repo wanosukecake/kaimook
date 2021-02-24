@@ -11,7 +11,7 @@ class Goal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type', 'goal', 'progress'
+        'type', 'goal', 'from', 'to', 'progress'
     ];
 
     protected static function boot()
@@ -19,6 +19,7 @@ class Goal extends Model
         parent::boot();
         self::saving(function($post) {
             $post->user_id = \Auth::id();
+            $post->progress = 0;
             $post->is_expired = 0;
         });
     }

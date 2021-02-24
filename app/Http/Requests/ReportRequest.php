@@ -25,10 +25,28 @@ class ReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:2',
-            'body' => 'max:1000',
+            'title' => 'required|max:20',
+            'type' => 'required|numeric|in:1,2,3,4',
+            'hour' => 'numeric',
+            'minutes' => 'numeric',
+            'body' => 'present|max:1000',
             'is_public' => 'required|numeric',
-            'published_at' => 'required|date_format:Y-m-d H:i',
+            'published_at' => 'date_format:Y-m-d H:i',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'title' => 'タイトル',
+            'hour' => '時間',
+            'minutes' => '分',
+            'body' => 'メモ',
+            'is_public' => 'ステータス',
+            'published_at' => '公開日',
         ];
     }
 }
