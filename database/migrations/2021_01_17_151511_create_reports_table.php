@@ -21,7 +21,7 @@ class CreateReportsTable extends Migration
             $table->integer('hour')->nullable();
             $table->integer('minutes')->nullable();
             $table->boolean('is_public')->default(true)->comment('公開・非公開');
-            $table->dateTime('published_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('公開日');
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });
     }
