@@ -7,9 +7,7 @@
             config('const.Goal'),
             null, 
             [
-                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('body') ? ' is-invalid' : ''),
-                'id' => '',
-                'style' => ''
+                'class' => 'form-control col-sm-2 form-inline' . ($errors->has('type') ? ' is-invalid' : ''),
             ]) 
         }}
         @error('type')
@@ -22,12 +20,12 @@
 
 <div class="form-group row">
     {{ Form::label('goal', '内容', ['class' => 'col-sm-2 col-form-label']) }}
-    <div class="col-sm-1">
+    <div class="col-sm-2">
         {{ Form::text('goal', null, [
-            'class' => 'form-control' . ($errors->has('body') ? ' is-invalid' : ''),
+            'class' => 'form-control' . ($errors->has('goal') ? ' is-invalid' : ''),
             'rows' => 5
         ]) }}
-        @error('body')
+        @error('goal')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>

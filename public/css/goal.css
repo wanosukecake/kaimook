@@ -11,3 +11,6 @@
 .card-header h4 {
     color:#6c757d !important;
 }
+.invalid-feedback {
+    width:300px;
+}

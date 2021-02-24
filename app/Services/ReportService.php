@@ -95,21 +95,21 @@ class ReportService extends BaseService
         DB::beginTransaction();
         try {
             $postData = $request->all();
-            $goal = $this->goal->getGoalData(Auth::id());
+            $goal = $this->goal->getGoalData(Auth::id());            
             // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
-            // TODO:エラーハンドリング調査。goalがnullで来ることはあるか。
             if (isset($goal) && $goal['type'] == $postData['type']) {
                 $calc_progress = $this->calcProgress($goal, $postData);
                 $data = ['progress' => $calc_progress['progress']];
                 $postData['added_progress'] = $calc_progress['added_progress'];
                 // 目標に対する進捗率を更新
-                $this->goal->updateById($goal['id'], $data);
+                $this->goal->updateById($goal['id'], $data) == 1 ?: logger()->error("update Error goal_id is ". $goal['id']);
             }
             // レポートを更新
             $this->report->save($postData);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+            logger()->error('Error Message is "'. $e->getMessage(). '" '. 'user_id is '. Auth::id());
             return false;
         }
 
@@ -142,11 +142,11 @@ class ReportService extends BaseService
                     $postData['added_progress'] = $calc_progress['added_progress'];
                 }
             }
-
             $this->report->update($postData, Auth::id());
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+            logger()->error('Error Message is "'. $e->getMessage(). '" '. 'user_id is '. Auth::id());
             return false;
         }
         return true;
@@ -178,6 +178,7 @@ class ReportService extends BaseService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+            logger()->error('Error Message is "'. $e->getMessage(). '" '. 'user_id is '. Auth::id());
             return false;
         }
         return true;

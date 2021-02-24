@@ -25,6 +25,8 @@
                     <h4>週間目標</h4>
                 </div>
                 <div class="card-body">
+                    <p>あなたの目標は1週間で<span class="now_progress">{{ $goal['goal'] . config("const.Goal.". $goal['type']) }}</span>です。</p>
+                    <p>目標週間は {{ $goal['from'] }} ~ {{ $goal['to'] }} です。</p>
                     <p>今週の達成率は<span class="now_progress">{{ $goal['progress'] }}</span>%です</p>
                     <p>※作成した目標は、目標期間終了翌日の0時にリセットされます。</p>
                 </div>

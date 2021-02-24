@@ -62,7 +62,7 @@ $title = '投稿一覧';
                 <div class="card-body">
                     <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
                         <li class="media">
-                        @if ( $report['type'] == config('const.GoalType.TIME'))
+                        @if ( $report['type'] == config("const.GoalType.TIME"))
                             <div class="media-pic report-time bg-info">
                                 <i class="far fa-clock"></i>
                             </div>
@@ -80,7 +80,7 @@ $title = '投稿一覧';
                             </div>
                         @endif                            
                         <div class="media-body">
-                            @if ($report['type'] == config('const.GoalType.TIME'))
+                            @if ($report['type'] == config("const.GoalType.TIME"))
                                 <div class="media-title mb-1">{{ $report['hour']?? '0' }}時間 {{ $report['minute']?? '0' }} 分</div>
                             @else                      
                                 <div class="media-title mb-1">{{ $report['number'] . config("const.Goal.". $report['type']) }}</div>
@@ -111,7 +111,7 @@ $title = '投稿一覧';
         </div>
     </div>
     @empty
-        <p>数字なし</p>
+        <p>レポートはありません。</p>
     @endforelse
     <div class="pager">
         {{ $reports['list']->links() }}

@@ -24,13 +24,10 @@ class GoalController extends Controller
     {
         $is_goal_exist = true;
         $goal = $this->goalService->getGoalData();
-        // TODO:ここ多分バグ、ない時の判定がうまくいってない
         if (!$goal) {
             $is_goal_exist = false; 
         }
-
-        // TODO:存在チェックをし、存在していたら削除ボタンを出す判定処理を追加
-        return view('back.goals.index', compact('goal','is_goal_exist'));
+        return view('back.goals.index', compact('goal', 'is_goal_exist'));
     }
 
     /**
@@ -44,12 +41,11 @@ class GoalController extends Controller
         $goal = $this->goalService->save($request);
         if ($goal) {
             return redirect()
-                ->route('back.goals.index', $goal)
-                ->withSuccess('データを登録しました。');
+                ->route('back.goals.index');
         } else {
             return redirect()
                 ->route('back.goals.index')
-                ->withError('データの登録に失敗しました。');
+                ->withError('目標の登録に失敗しました。');
         }
     }
 

@@ -20,6 +20,7 @@ class AddFromToToGoals extends Migration
             $table->date('to')
                     ->nullable()
                     ->after('from');
+            $table->unique('user_id');
         });
         Schema::table('reports', function (Blueprint $table) {
             $table->integer('added_progress')
@@ -42,7 +43,7 @@ class AddFromToToGoals extends Migration
         });
 
         Schema::table('reports', function (Blueprint $table) {
-            $table->dropColumn('progress');
+            $table->dropColumn('added_progress');
         });
     }
 }
