@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Schema;
 use Carbon\CarbonImmutable;
 
 class AppServiceProvider extends ServiceProvider
@@ -40,5 +41,6 @@ class AppServiceProvider extends ServiceProvider
         if (\App::environment('production')) {
             \URL::forceScheme('https');
         }
+        Schema::defaultStringLength(191);
     }
 }
