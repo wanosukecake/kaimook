@@ -1,5 +1,5 @@
 <?php
-$title = '投稿登録';
+    $title = 'レポートの作成';
 ?>
 @extends('back.layouts.base')
  

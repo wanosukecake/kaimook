@@ -19,9 +19,9 @@
             // 通信成功時のコールバック処理
             doneFunc(response)
         })
-        .fail(function (response) {
+        .fail(function (response) { 
             // 通信失敗時のコールバック処理
-            alert('通信に失敗しました。')
+            location.href = 'error/' + response.status;
         })
         .always(function(){
             $(this).hideLoading();

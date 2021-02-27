@@ -9,3 +9,6 @@ Route::resource('goals', 'GoalController');
 Route::get('/get-goal-graph-data', 'GoalController@getGoalGraphData');
 
 Route::resource('posts', 'PostController')->except('show');
+Route::get('error/{code}', function ($code) {
+    abort($code);
+});

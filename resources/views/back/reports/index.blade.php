@@ -1,5 +1,5 @@
 <?php
-$title = '投稿一覧';
+$title = 'レポート一覧';
 ?>
 @extends('back.layouts.base')
 @section('content')

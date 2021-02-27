@@ -17,7 +17,6 @@ class BaseService {
 
     /**
      * 表示用に勉強時間を計算して返却
-     * @param  object  $request
      * @return 
      */
     protected function getMothlyReportsList() 
