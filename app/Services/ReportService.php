@@ -95,6 +95,9 @@ class ReportService extends BaseService
         DB::beginTransaction();
         try {
             $postData = $request->all();
+            // 作業時間の整形
+            list($postData['hour'], $postData['minutes']) = explode(":", $postData['time']);
+            unset($postData['time']);
             $goal = $this->goal->getGoalData(Auth::id());            
             // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
             if (isset($goal) && $goal['type'] == $postData['type']) {
@@ -128,6 +131,9 @@ class ReportService extends BaseService
         try {
             $goal = $this->goal->getGoalData(Auth::id());
             $report = $this->getReportById($postData['id']);
+            // 作業時間の整形
+            list($postData['hour'], $postData['minutes']) = explode(":", $postData['time']);
+            unset($postData['time']);
             if (isset($goal) && $goal['type'] == $report['type']) {
                 // 変更したレポートが目標の有効期限内かチェック
                 if ($this->isBetweenGoal($goal, $report)) {
@@ -232,6 +238,7 @@ class ReportService extends BaseService
         $created = Carbon::parse($report['created_at']);
         $goal_from = new Carbon($goal['from']);
         $goal_to = new Carbon($goal['to']);
+
         return $created->between($goal_from, $goal_to)? true : false;
     }
 }

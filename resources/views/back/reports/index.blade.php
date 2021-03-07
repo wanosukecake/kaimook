@@ -1,5 +1,5 @@
 <?php
-$title = 'レポート一覧';
+    $title = 'レポート一覧';
 ?>
 @extends('back.layouts.base')
 @section('content')
@@ -57,54 +57,54 @@ $title = 'レポート一覧';
         <div class="col-lg-12 col-sm-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
-                    <h4>{{ $report['title']}}</h4>
+                    <h4><a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">{{ $report['title']}}</a></h4>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
                         <li class="media">
-                        @if ( $report['type'] == config("const.GoalType.TIME"))
-                            <div class="media-pic report-time bg-info">
-                                <i class="far fa-clock"></i>
-                            </div>
-                        @elseif ($report['type'] == config("const.GoalType.PAGE"))
-                            <div class="media-pic report-page">
-                                <i class="far fa-file-alt"></i>
-                            </div>
-                        @elseif ($report['type'] == config("const.GoalType.CHAPTER"))
-                            <div class="media-pic report-chapter">
-                                <i class="fas fa-scroll"></i>
-                            </div>
-                        @elseif ($report['type'] == config("const.GoalType.LESSON"))
-                            <div class="media-pic report-lesson">
-                                <i class="far fa-comments"></i>
-                            </div>
-                        @endif                            
-                        <div class="media-body">
-                            @if ($report['type'] == config("const.GoalType.TIME"))
-                                <div class="media-title mb-1">{{ $report['hour']?? '0' }}時間 {{ $report['minute']?? '0' }} 分</div>
-                            @else                      
-                                <div class="media-title mb-1">{{ $report['number'] . config("const.Goal.". $report['type']) }}</div>
-                            @endif 
-                            <div class="text-time">{{ $report['created_at']?? "-" }}</div>
-                            <div class="media-description text-muted">
-                                {{ $report['body']?? "-" }}
-                            </div>
-                            <div class="row media-links">
-                                <a href="#">詳細</a>
-                            <div class="bullet"></div>
-                                <a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">編集</a>
-                            <div class="bullet"></div>
-                            {{ Form::model($report, [
-                                'route' => ['back.reports.destroy', $report],
-                                'method' => 'delete'
-                            ]) }}
-                            {{ Form::submit('削除', [
-                                    'onclick' => "return confirm('本当に削除しますか?')",
-                                    'class' => 'text-danger delete-report'
+                            <a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">
+                                @if ( $report['type'] == config("const.GoalType.TIME"))
+                                    <div class="media-pic report-time bg-info">
+                                        <i class="far fa-clock"></i>
+                                    </div>
+                                @elseif ($report['type'] == config("const.GoalType.PAGE"))
+                                    <div class="media-pic report-page">
+                                        <i class="far fa-file-alt"></i>
+                                    </div>
+                                @elseif ($report['type'] == config("const.GoalType.CHAPTER"))
+                                    <div class="media-pic report-chapter">
+                                        <i class="fas fa-scroll"></i>
+                                    </div>
+                                @elseif ($report['type'] == config("const.GoalType.LESSON"))
+                                    <div class="media-pic report-lesson">
+                                        <i class="far fa-comments"></i>
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="media-body">
+                                <div class="media-title mb-1">{{ $report['hour']?? '0' }}時間 {{ $report['minutes']?? '0' }} 分</div>
+                                @if ($report['type'] !== config("const.GoalType.TIME"))
+                                    <div class="media-title mb-1">{{ $report['number'] . config("const.Goal.". $report['type']) }}</div>
+                                @endif 
+                                <div class="text-time">{{ $report['updated_at']?? "-" }}</div>
+                                <div class="media-description text-muted">
+                                    {{ $report['body']?? "-" }}
+                                </div>
+                                <div class="row media-links">
+                                    <a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">編集</a>
+                                <div class="bullet"></div>
+                                {{ Form::model($report, [
+                                    'route' => ['back.reports.destroy', $report],
+                                    'method' => 'delete'
                                 ]) }}
-                            {{ Form::close() }}
+                                {{ Form::submit('削除', [
+                                        'onclick' => "return confirm('本当に削除しますか?')",
+                                        'class' => 'text-danger delete-report'
+                                    ]) }}
+                                {{ Form::close() }}
+                                </div>
                             </div>
-                        </div>
+                        </li>
                     </ul>
                 </div>
             </div>

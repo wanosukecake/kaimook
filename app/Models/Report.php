@@ -11,12 +11,10 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'body', 'hour', 'minutes', 'number', 'type', 'added_progress', 'is_public', 'published_at'
+        'title', 'body', 'hour', 'minutes', 'number', 'type', 'added_progress',
     ];
 
     protected $casts = [
-        'is_public' => 'bool',
-        'published_at' => 'datetime'
     ];
 
     protected static function boot()
@@ -34,17 +32,10 @@ class Report extends Model
         return $this->belongsTo(User::class);
     }
 
-    // 公開のみ表示
-    public function scopePublic(Builder $query)
-    {
-        return $query->where('is_public', true);
-    }
-
     // 公開記事一覧取得
-    public function scopePublicList(Builder $query, int $userId)
+    public function scopeLatestList(Builder $query, int $userId)
     {
         return $query
-            ->public()
             ->latest('created_at')
             ->where('user_id',$userId);
     }
@@ -52,6 +43,6 @@ class Report extends Model
     // 公開記事をIDで取得
     public function scopePublicFindByIdUserId(Builder $query, int $id, $userId)
     {
-        return $query->public()->where('user_id',$userId)->findOrFail($id);
+        return $query->where('user_id',$userId)->findOrFail($id);
     }
 }

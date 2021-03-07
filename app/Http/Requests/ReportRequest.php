@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\AlphaNumCheck;
 
 class ReportRequest extends FormRequest
 {
@@ -27,11 +28,9 @@ class ReportRequest extends FormRequest
         return [
             'title' => 'required|max:20',
             'type' => 'required|numeric|in:1,2,3,4',
-            'hour' => 'numeric',
-            'minutes' => 'numeric',
+            'time' => 'date_format:H:i',
+            'number' => ['numeric', new AlphaNumCheck],
             'body' => 'present|max:1000',
-            'is_public' => 'required|numeric',
-            'published_at' => 'date_format:Y-m-d H:i',
         ];
     }
 
@@ -44,9 +43,9 @@ class ReportRequest extends FormRequest
             'title' => 'タイトル',
             'hour' => '時間',
             'minutes' => '分',
+            'number' => '作業量',
+            'time' => '作業時間',
             'body' => 'メモ',
-            'is_public' => 'ステータス',
-            'published_at' => '公開日',
         ];
     }
 }

@@ -28,7 +28,6 @@ class ReportController extends Controller
     {
         $reports = $this->reportService->getReportsList();
         return response(view('back.reports.index', compact('reports')));
-        
     }
 
     /**
@@ -40,21 +39,6 @@ class ReportController extends Controller
         $data = $this->reportService->getIndexGraphData();
 
         return response()->json($data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function show(int $id)
-    {
-        $report = $this->reportService->getReportById($id);
-        if (!$report) {
-            throw new \Exception();
-        }
-
     }
 
     /**
@@ -98,6 +82,7 @@ class ReportController extends Controller
      */
     public function edit(Report $report)
     {
+        $report['time'] = sprintf('%02d', $report['hour']). ":". sprintf('%02d', $report['minutes']);
         return view('back.reports.edit', compact('report'));
     }
 

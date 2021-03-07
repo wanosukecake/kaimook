@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\AlphaNumCheck;
 
 class GoalRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class GoalRequest extends FormRequest
     {
         return [
             'type' => 'required|numeric|in:1,2,3,4',
-            'goal' => 'required|numeric|min:1|max:300',
+            'goal' => ['required', new AlphaNumCheck,'numeric','min:1','max:999']
         ];
     }
 

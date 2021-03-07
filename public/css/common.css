@@ -1,21 +1,21 @@
-#loading_box {
-    width: 100%;
-    height: 100%;
-    background: #FFF;
-    opacity: 0.8;
+.loading {    
+    display: none; /* 通常時は非表示 */
+    z-index: 1;
     position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    color: gray;
 }
 
-#loading_box img {
+
+
+/* #loading_box .fas {
     position: absolute;
     top: 35%;
     left: 35%;
     margin: -40px 0 0 -40px;
     width: auto;
-}
+} */
 
 .text-report {
     height: 119px;
@@ -23,4 +23,8 @@
 
 .none {
     display:none;
+}
+
+.fa-spinner {
+    font-size: 60px;
 }

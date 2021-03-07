@@ -55,7 +55,7 @@ class GoalController extends Controller
      */
     public function getGoalGraphData(Request $request) 
     {
-        if ($request->ajax()) {
+        if (!$request->ajax()) {
             abort(400);
         }
         $data = $this->goalService->getIndexGraphData();

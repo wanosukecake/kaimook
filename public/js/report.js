@@ -20,19 +20,22 @@ $(function(){
         $(this).ajaxRequest(doneFunc, data, url, 'get')
     }
 
-    changeForm();
     // 作業量フォーム部分
+    changeForm();
     $('[name=type]').change(function() {
         changeForm();
     });
+
+    // DatetimePickerに初期値表示
+    if (!$("#timePicker").data('time')) {
+        $("#time").val('00:00')
+    }
 });
 
 function changeForm () {
     let typeVal = $('[name=type]').val();
     if (typeVal != 1) {
-        $(".time").addClass('none');
         $(".number").removeClass('none');
-        $(".time select").prop('disabled', true);
         $(".number input").prop('disabled', false);
         if (typeVal == 2) {
             // ページの時
@@ -43,6 +46,10 @@ function changeForm () {
         } else if (typeVal == 4) {
             // レッスンの時
             $(".unit").text('レッスンまで')
+        }　else if (typeVal == 5) {
+
+            // 別にメッセージはいらないかも
+            // $(".other-message").text('※その他を選択した場合、時間は')
         }
     } else {
         $(".time select").prop('disabled', false);

@@ -17,6 +17,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hi', function () {
-    echo 'hi';
-});

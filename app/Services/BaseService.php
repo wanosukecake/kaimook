@@ -26,11 +26,10 @@ class BaseService {
         $to = $today->endOfMonth();
 
         $reports = $this->report->getReportsByFromTo(Auth::id(), "", $from, $to, "");
-
         // 日次勉強時間の集計
         $daily_total = $this->calculateTotalTime($reports, $today, $today->endOfDay());
         // 週次勉強時間の集計
-        $weekly_total = $this->calculateTotalTime($reports, $today->startOfWeek()->subDay(1), $today->endOfWeek()->subDay(1));
+        $weekly_total = $this->calculateTotalTime($reports, $today->startOfWeek()->subDay(1), $today->endOfWeek());
         // 月次勉強時間の集計
         $monthly_total = $this->calculateTotalTime($reports, $today->startOfMonth(), $today->endOfMonth());
 
