@@ -31,17 +31,6 @@ class ReportController extends Controller
     }
 
     /**
-     * return graph data.
-     * @return json \Illuminate\Http\Response
-     */
-    public function getIndexGraphData() 
-    {
-        $data = $this->reportService->getIndexGraphData();
-
-        return response()->json($data);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

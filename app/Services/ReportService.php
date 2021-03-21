@@ -27,49 +27,13 @@ class ReportService extends BaseService
     public function getReportsList()
     {
         $reports = $this->report->getReportsList(Auth::id());
-        $calculate_time = $this->getMothlyReportsList();
+        $calculate_time = $this->getMothlyReportsTime($reports);
         $result = [
             'list' => $reports,
             'dailyTotal' =>  $calculate_time['dailyTotal'],
             'weeklyTotal' =>  $calculate_time['weeklyTotal'],
             'monthlyTotal' =>  $calculate_time['monthlyTotal']
         ];
-
-        return $result;
-    }
-
-    /**
-     * レポート一覧画面のグラフ描画用にデータ取得
-     * @return array $result
-     */
-    public function getIndexGraphData()
-    {
-        $reports = $this->report->getReportsList(Auth::id());
-        $today = Carbon::today();
-        $daily = $reports
-                    ->whereBetween('created_at', [$today->startOfWeek()->subDay(1), $today->endOfWeek()->subDay(1)])
-                    ->groupBy(function($date) {
-                        // m/dでまとめて今週分を集計
-                        return Carbon::parse($date->created_at)->format('m/d');
-                    });
-        // 週時間の集計
-        $dailyHours = $daily
-                        ->map(function ($day) {
-                            return $day->sum('hour');
-                        });
-        // 週分の集計
-        $dailyMinutes = $daily
-                        ->map(function ($day) {
-                            return $day->sum('minutes');
-                        });
-
-        $result = [];
-        // 分を時間に換算し、resultを整形
-        // TODO:intvalに変えて動作確認まだ
-        foreach ($dailyMinutes as $key => $row) {
-            $result['data'][] = $dailyHours[$key] + intval($row / 60);
-            $result['label'][] = $key;
-        }
 
         return $result;
     }

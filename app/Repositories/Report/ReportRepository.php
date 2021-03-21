@@ -28,8 +28,6 @@ class ReportRepository implements ReportRepositoryInterface
         return $result;
     }
 
-    // TODO:今月として取得し、サービス側で集計、がいいかもしれない。
-    // それでいくならgetReportsByMonth
     public function getReportsByFromTo($user_id, $where, $from, $to, $format) {
         $result = Report::with('user')
                     ->LatestList($user_id)

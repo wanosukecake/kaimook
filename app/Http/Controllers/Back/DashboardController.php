@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Services\DashboardService;
 use Illuminate\Http\Request;
 use App\Models\Report;
 
 class DashboardController extends Controller
 {
+    public function __construct(DashboardService $dashboardService)
+    {
+        $this->dashboardService = $dashboardService;
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -16,8 +22,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $reports = Report::with('user')->latest('id')->get();
-
-        return view('back.dashboard',compact('reports'));
+        $data = $this->dashboardService->getData();
+        return view('back.dashboard.index',compact('data'));
     }
 }

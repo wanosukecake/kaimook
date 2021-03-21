@@ -12,7 +12,7 @@
             type: type,
             data: data,
             dataType:"json",
-            beforeSend:function(){
+            beforeSend:function() {
             },
         })
         .done(function (response) {
@@ -24,20 +24,21 @@
             location.href = 'error/' + response.status;
         })
         .always(function(){
-            $(this).hideLoading();
+            // $(this).hideLoading();
         })
     };
 
     $.fn.showLoading = function () {
-        let loadingUrl = $("#loading").val();
-        $('body').append('<div id="loading_box"><img src=" ' + loadingUrl + '"></div>');
+        // let loadingUrl = $("#loading").val();
+        // $('body').append('<div id="loading_box"><i class="fas fa-spinner fa-5x fa-spin"></div>');
+        $('.loading').css('display', 'block');
     };
 
     $.fn.hideLoading = function () {
         $('#loading_box').remove();
     }
 
-    $.fn.describeGraph = function (id, type, backgroundColor, options={}, response) {
+    $.fn.describeGraph = function (id, datasetsLabel, type, backgroundColor, options={}, response) {
         if (document.getElementById(id)) {
             let ctx = document.getElementById(id).getContext('2d');
             let chart = new Chart(ctx, {
@@ -45,13 +46,11 @@
                 data: {
                     labels: response.label,
                     datasets: [{
-                        label: response.label,
+                        label: !datasetsLabel? "" :datasetsLabel,
                         backgroundColor: backgroundColor,
-                        // borderColor: 'rgb(255, 99, 132)',
                         data: response.data
                     }]
                 },
-                // Configuration options go here
                 options: options
             });
         }

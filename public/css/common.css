@@ -7,8 +7,6 @@
     color: gray;
 }
 
-
-
 /* #loading_box .fas {
     position: absolute;
     top: 35%;
@@ -27,4 +25,29 @@
 
 .fa-spinner {
     font-size: 60px;
+}
+
+.fa-book,
+/* 時間 */
+.fa-clock,
+/* ページ */
+.fa-file-alt,
+/* 章 */
+.fa-scroll,
+/* レッスン */
+.fa-comments {
+    font-size: 22px;
+    color: #fff;  
+}
+
+.report-chapter {
+    background-color: #800000;
+}
+
+.report-page {
+    background-color: #00BB00;
+}
+  
+.report-lesson {
+    background-color: #FFBBFF;
 }

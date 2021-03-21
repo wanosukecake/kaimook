@@ -1,0 +1,27 @@
+.recent-list-head {
+    padding-left: 18px !important;   
+}
+
+.recent-list {
+    padding-left: 10px !important;
+}
+
+.media-pic {
+    width: 80px;
+    height: 110px;
+    margin-right: 10px;
+    border-radius: 3px;
+    line-height: 110px;
+    font-style: normal;
+    text-align: center;
+}
+
+.media-body {
+    width: 100%;
+    overflow: hidden;
+}
+.report-body {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}

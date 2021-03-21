@@ -1,5 +1,5 @@
 <?php
-$title = 'ダッシュボード';
+$title = 'ダッシュaボード';
 ?>
 @extends('back.layouts.base')
  
