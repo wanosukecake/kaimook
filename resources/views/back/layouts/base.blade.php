@@ -11,18 +11,13 @@
         <link rel="stylesheet" href="{{ asset('css/components.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
         <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        @stack('css')
+        <script src="{{ asset('/js/libraries/jquery-3.6.0.js') }}"></script>
+        <script src="{{ asset('/js/libraries/jquery.nicescroll.min.js') }}"></script>
+        <script src="{{ asset('/js/libraries/bootstrap.min.js') }}"></script>
+        <script src="{{ mix('/js/app.js') }}"></script>
         <script src="{{ asset('/js/common.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <script src="{{ asset('/js/stisla.js') }}"></script>
-        <script src="{{ asset('/js/scripts.js') }}"></script>
-        <script src="{{ asset('/js/custom.js') }}"></script> 
-
+        @stack('js')
     </head>
 
     <body>
@@ -32,7 +27,7 @@
                 <div class="main-sidebar">
                     <aside id="sidebar-wrapper">
                         <div class="sidebar-brand">
-                            <a href="index.html">kaimook</a>
+                            <a href="{{ route('back.dashboard') }}">kaimook</a>
                         </div>
                         <div class="sidebar-brand sidebar-brand-sm">
                             <a href="index.html">St</a>
@@ -41,7 +36,7 @@
                             <li class="menu-header">ダッシュボード</li>
                             <li class="dropdown active">
                                 <ul>
-                                    <li><a class="nav-link" href="/admin/goals">ダッシュボード</a></li>
+                                    <li><a class="nav-link" href="{{ route('back.dashboard') }}">ダッシュボード</a></li>
                                 </ul>
                             </li>
                             <li class="menu-header">レポート</li>
@@ -76,7 +71,8 @@
                 </footer>   
             </div>
         </div>
-        <input type="hidden" id="loading" name="loading" value="{{ asset('/img/loading.gif') }}">
-   
+        <div class="loading">
+            <i class="fas fa-spinner fa-5x fa-spin"></i>
+        </div>
     </body>
 </html>

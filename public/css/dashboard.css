@@ -25,3 +25,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+
+.card-body {
+    padding: 0.7rem !important;
+}

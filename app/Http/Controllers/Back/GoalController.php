@@ -27,7 +27,8 @@ class GoalController extends Controller
         if (!$goal) {
             $is_goal_exist = false; 
         }
-        return view('back.goals.index', compact('goal', 'is_goal_exist'));
+        $goal_graph = json_encode($this->goalService->getIndexGraphData($goal));
+        return view('back.goals.index', compact('goal', 'is_goal_exist', 'goal_graph'));
     }
 
     /**

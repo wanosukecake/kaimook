@@ -72,7 +72,7 @@ class BaseService {
      * 目標の画面グラフ描画用にデータ取得
      * @return array $result
      */
-    public function getIndexGraphData()
+    public function getIndexGraphData($goal)
     { 
         $result = [
             'data' => [
@@ -84,8 +84,6 @@ class BaseService {
                 '未達率'
             ]            
         ];
-
-        $goal = $this->getGoalData(Auth::id());
 
         if (!$goal) {
             // データがない時は達成率0でグラフを描画する

@@ -11,7 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js([
+        'resources/js/libraries/Chart.bundle.min.js',    
+        'resources/js/libraries/popper.min.js',
+        'resources/js/libraries/scripts.js',
+        'resources/js/libraries/stisla.js',
+        'resources/js/libraries/custom.js',
+    ], 'public/js/app.js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+
+if (mix.inProduction()) {
+    mix.version();
+   } else {
+    mix.browserSync('localhost');
+}
