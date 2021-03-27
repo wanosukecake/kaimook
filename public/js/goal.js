@@ -1,50 +1,15 @@
 $(function(){
 
-    let url = '/admin/get-goal-graph-data';
-    let data = "";
-    let doneFunc = function (response) {
-        console.log(response)
-        let options ={
+    if (document.getElementById('goalChart')) {
+        let goalGraphData = $.parseJSON($("#goal_graph_data").val());
+        let goalOptions = {
             title: {
                 display: true,
                 text: '週間目標達成率'
             }
-        };
-        $(this).describeGraph('goalChart', 'doughnut', ['rgb(255, 160, 122)','rgb(112, 128, 144)'], options, response);
-    };
-    
-    if (document.getElementById('goalChart')) {
-        $(this).ajaxRequest(doneFunc, data, url, 'get')
+        };    
+        $(this).describeGraph('goalChart', '', 'doughnut', ['rgb(255, 160, 122)','rgb(112, 128, 144)'], goalOptions, goalGraphData);
     }
-
-
-    //         let ctx = document.getElementById('goalChart').getContext('2d');
-//         let chart = new Chart(ctx, {
-//             // The type of chart we want to create
-//             type: 'doughnut',
-//             // The data for our dataset
-//             data: {
-//                 labels: ['達成率','未達率'],
-//                 datasets: [{
-//                     backgroundColor: 'rgb(255, 99, 132)',
-//                     // borderColor: 'rgb(255, 99, 132)',
-//                     data: [10,90],
-//                     backgroundColor: [
-// 						'rgb(255, 160, 122)',
-// 						'rgb(112, 128, 144)',
-// 					],
-//                 }]
-//             },
-    
-//             // Configuration options go here
-//             options: {
-//                 title: {
-//                   display: true,
-//                   //グラフタイトル
-//                   text: '週間目標達成率'
-//                 }
-//             }
-//         });
 
     // 内容の単位変更
     $('[name=type]').change(function() {

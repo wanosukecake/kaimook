@@ -23,7 +23,8 @@
     <div class="col-sm-2">
         {{ Form::text('goal', null, [
             'class' => 'form-control' . ($errors->has('goal') ? ' is-invalid' : ''),
-            'rows' => 5
+            'rows' => 5,
+            'maxlength' => 3 
         ]) }}
         @error('goal')
             <div class="invalid-feedback">

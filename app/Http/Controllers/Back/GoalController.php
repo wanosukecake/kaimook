@@ -27,7 +27,8 @@ class GoalController extends Controller
         if (!$goal) {
             $is_goal_exist = false; 
         }
-        return view('back.goals.index', compact('goal', 'is_goal_exist'));
+        $goal_graph = json_encode($this->goalService->getIndexGraphData($goal));
+        return view('back.goals.index', compact('goal', 'is_goal_exist', 'goal_graph'));
     }
 
     /**
@@ -50,58 +51,16 @@ class GoalController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Goal  $goal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Goal $goal)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Goal  $goal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Goal $goal)
-    {
-        //
-    }
-
-    /**
      * return graph data.
      * @return json \Illuminate\Http\Response
      */
-    public function getGoalGraphData() 
+    public function getGoalGraphData(Request $request) 
     {
+        if (!$request->ajax()) {
+            abort(400);
+        }
         $data = $this->goalService->getIndexGraphData();
 
         return response()->json($data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Goal  $goal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Goal $goal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Goal  $goal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Goal $goal)
-    {
-        //
     }
 }

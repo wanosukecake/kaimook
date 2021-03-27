@@ -9,6 +9,9 @@ class GoalRepository implements GoalRepositoryInterface
     public function getGoalData($user_id) 
     {
         $result = Goal::where('user_id', $user_id)->NotExpired()->first();
+        if ($result) {
+            $result = $result->toArray();
+        }
         return $result;
     }
 

@@ -1,8 +1,7 @@
 <?php
-$title = '投稿登録';
+    $title = 'レポートの作成';
 ?>
 @extends('back.layouts.base')
- 
 @section('content')
     <h2 class="section-title">レポートの作成</h2>
     <div class="card">

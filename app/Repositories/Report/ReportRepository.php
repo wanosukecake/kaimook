@@ -7,7 +7,7 @@ use App\Models\Report;
 class ReportRepository implements ReportRepositoryInterface
 {   
     public function getReportsList($user_id) {
-        $result = Report::with('user')->PublicList($user_id)->paginate(10);
+        $result = Report::with('user')->LatestList($user_id)->paginate(10);
         return $result;
     }
 
@@ -28,22 +28,13 @@ class ReportRepository implements ReportRepositoryInterface
         return $result;
     }
 
-    // TODO:今月として取得し、サービス側で集計、がいいかもしれない。
-    // それでいくならgetReportsByMonth
     public function getReportsByFromTo($user_id, $where, $from, $to, $format) {
         $result = Report::with('user')
-                    ->PublicList($user_id)
+                    ->LatestList($user_id)
                     ->whereBetween('created_at', [$from, $to])
                     ->get();
 
         return $result;
-        //             ->groupBy(function ($row) {
-        //                 return Carbon::parse($row->created_at)->format('m/d');
-        //             })
-        //             ->map(function ($day) {
-        //                 return $day->sum('hour');
-        //             });
-        // dd($result);
     }
 
     public function delete($report, $user_id) {

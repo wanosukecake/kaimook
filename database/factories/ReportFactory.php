@@ -26,8 +26,6 @@ class ReportFactory extends Factory
         return [
             'title' => $this->faker->realText(rand(20,50)),
             'body' => $this->faker->realText(rand(100,200)),
-            'is_public' => $this->faker->boolean(90),
-            'published_at' => $random_date,
             'user_id' => $this->faker->numberBetween(1,2),
             'hour' => $this->faker->numberBetween(1,12),
             'minutes' => $this->faker->numberBetween(0,60),

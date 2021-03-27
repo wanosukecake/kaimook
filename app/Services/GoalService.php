@@ -15,13 +15,6 @@ class GoalService extends BaseService
         $this->goal = $goalRepositoryInterface;
     }
 
-    public function getGoalData() 
-    {
-        // 一覧表示用
-        $goal = $this->goal->getGoalData(Auth::id());
-        return $goal;
-    }
-
     /**
      * 目標を登録
      * @param  object  $request
@@ -70,26 +63,4 @@ class GoalService extends BaseService
         return true;
     }
 
-    /**
-     * 目標の画面グラフ描画用にデータ取得
-     * @return array $result
-     */
-    public function getIndexGraphData()
-    {
-        $goal = $this->getGoalData(Auth::id());
-        $not_achieved = 100 - $goal['progress'];
-        if ($not_achieved < 0) {
-            $not_achieved = 0;
-        }
-        return [
-            'data' => [
-                $goal['progress'], 
-                $not_achieved
-            ],
-            'label' => [
-                '達成率',
-                '未達率'
-            ]
-        ];
-    }
 }

@@ -27,49 +27,13 @@ class ReportService extends BaseService
     public function getReportsList()
     {
         $reports = $this->report->getReportsList(Auth::id());
-        $calculate_time = $this->getMothlyReportsList();
+        $calculate_time = $this->getMothlyReportsTime($reports);
         $result = [
             'list' => $reports,
             'dailyTotal' =>  $calculate_time['dailyTotal'],
             'weeklyTotal' =>  $calculate_time['weeklyTotal'],
             'monthlyTotal' =>  $calculate_time['monthlyTotal']
         ];
-
-        return $result;
-    }
-
-    /**
-     * レポート一覧画面のグラフ描画用にデータ取得
-     * @return array $result
-     */
-    public function getIndexGraphData()
-    {
-        $reports = $this->report->getReportsList(Auth::id());
-        $today = Carbon::today();
-        $daily = $reports
-                    ->whereBetween('created_at', [$today->startOfWeek()->subDay(1), $today->endOfWeek()->subDay(1)])
-                    ->groupBy(function($date) {
-                        // m/dでまとめて今週分を集計
-                        return Carbon::parse($date->created_at)->format('m/d');
-                    });
-        // 週時間の集計
-        $dailyHours = $daily
-                        ->map(function ($day) {
-                            return $day->sum('hour');
-                        });
-        // 週分の集計
-        $dailyMinutes = $daily
-                        ->map(function ($day) {
-                            return $day->sum('minutes');
-                        });
-
-        $result = [];
-        // 分を時間に換算し、resultを整形
-        // TODO:intvalに変えて動作確認まだ
-        foreach ($dailyMinutes as $key => $row) {
-            $result['data'][] = $dailyHours[$key] + intval($row / 60);
-            $result['label'][] = $key;
-        }
 
         return $result;
     }
@@ -95,6 +59,9 @@ class ReportService extends BaseService
         DB::beginTransaction();
         try {
             $postData = $request->all();
+            // 作業時間の整形
+            list($postData['hour'], $postData['minutes']) = explode(":", $postData['time']);
+            unset($postData['time']);
             $goal = $this->goal->getGoalData(Auth::id());            
             // 登録したレポートのtypeが有効な目標と同一であれば進捗率を計算
             if (isset($goal) && $goal['type'] == $postData['type']) {
@@ -128,6 +95,9 @@ class ReportService extends BaseService
         try {
             $goal = $this->goal->getGoalData(Auth::id());
             $report = $this->getReportById($postData['id']);
+            // 作業時間の整形
+            list($postData['hour'], $postData['minutes']) = explode(":", $postData['time']);
+            unset($postData['time']);
             if (isset($goal) && $goal['type'] == $report['type']) {
                 // 変更したレポートが目標の有効期限内かチェック
                 if ($this->isBetweenGoal($goal, $report)) {
@@ -232,6 +202,7 @@ class ReportService extends BaseService
         $created = Carbon::parse($report['created_at']);
         $goal_from = new Carbon($goal['from']);
         $goal_to = new Carbon($goal['to']);
+
         return $created->between($goal_from, $goal_to)? true : false;
     }
 }
