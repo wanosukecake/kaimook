@@ -1,20 +1,14 @@
 $(function(){
 
-    let url = '/admin/get-goal-graph-data';
-    let data = "";
-    let doneFunc = function (response) {
-        console.log(response)
-        let options ={
+    if (document.getElementById('goalChart')) {
+        let goalGraphData = $.parseJSON($("#goal_graph_data").val());
+        let goalOptions = {
             title: {
                 display: true,
                 text: '週間目標達成率'
             }
-        };
-        $(this).describeGraph('goalChart', 'doughnut', ['rgb(255, 160, 122)','rgb(112, 128, 144)'], options, response);
-    };
-    
-    if (document.getElementById('goalChart')) {
-        $(this).ajaxRequest(doneFunc, data, url, 'get')
+        };    
+        $(this).describeGraph('goalChart', '', 'doughnut', ['rgb(255, 160, 122)','rgb(112, 128, 144)'], goalOptions, goalGraphData);
     }
 
     // 内容の単位変更

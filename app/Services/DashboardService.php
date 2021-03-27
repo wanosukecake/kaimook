@@ -58,11 +58,12 @@ class DashboardService extends BaseService
             }
             $result['time_graph'] = json_encode($data);
         }
+        $goal_data = $this->getGoalData();
         $result = array_merge($result, [
             'calculate_time' => $this->getMothlyReportsTime(),
             'recent_list' => $reports->take(5),
-            'goal_data' => $this->getGoalData(),
-            'goal_graph' => json_encode($this->getIndexGraphData())
+            'goal_data' => $goal_data,
+            'goal_graph' => json_encode($this->getIndexGraphData($goal_data))
         ]);
 
         return $result;
