@@ -56,7 +56,7 @@ class ReportController extends Controller
             ->route('back.reports.index')
             ->with($flash);
         } else {
-            $flash = ['error' => 'レポート更新に失敗しました。'];
+            $flash = ['error' => 'レポート作成に失敗しました。'];
             return redirect()
             ->route('back.reports.index')
             ->with($flash);

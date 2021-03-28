@@ -46,10 +46,6 @@ function changeForm () {
         } else if (typeVal == 4) {
             // レッスンの時
             $(".unit").text('レッスンまで')
-        }　else if (typeVal == 5) {
-
-            // 別にメッセージはいらないかも
-            // $(".other-message").text('※その他を選択した場合、時間は')
         }
     } else {
         $(".time select").prop('disabled', false);

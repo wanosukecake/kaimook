@@ -27,9 +27,9 @@ class ReportRequest extends FormRequest
     {
         return [
             'title' => 'required|max:20',
-            'type' => 'required|numeric|in:1,2,3,4',
+            'type' => 'required|numeric|in:1,2,3,4,5',
             'time' => 'date_format:H:i',
-            'number' => ['numeric', new AlphaNumCheck],
+            'number' => ['numeric', new AlphaNumCheck, 'max:100'],
             'body' => 'present|max:1000',
         ];
     }
