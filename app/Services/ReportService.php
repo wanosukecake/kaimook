@@ -27,6 +27,11 @@ class ReportService extends BaseService
     public function getReportsList()
     {
         $reports = $this->report->getReportsList(Auth::id());
+        foreach ($reports as $key => $row) {
+            if (mb_strlen($row['body']) > 40) {
+                $reports[$key]['body'] = mb_substr($row['body'], 0, 40). "...";
+            }
+        }
         $calculate_time = $this->getMothlyReportsTime($reports);
         $result = [
             'list' => $reports,

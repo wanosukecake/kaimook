@@ -87,8 +87,8 @@
                                     <div class="media-title mb-1">{{ $report['number'] . config("const.Goal.". $report['type']) }}</div>
                                 @endif 
                                 <div class="text-time">{{ $report['updated_at']?? "-" }}</div>
-                                <div class="media-description text-muted">
-                                    {{ $report['body']?? "-" }}
+                                <div class="media-description text-muted report-body" style="height:auto;">
+                                    {!! nl2br(e($report['body']?? "-")) !!}
                                 </div>
                                 <div class="row media-links">
                                     <a href="{{ route('back.reports.edit', ['report' => $report['id']]) }}">編集</a>
