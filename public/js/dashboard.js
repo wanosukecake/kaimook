@@ -11,7 +11,14 @@ $(function () {
                             return tick.toString() + '時間';
                         }
                     },
-                }]
+                }],
+                yAxes: [                           // Ｙ軸設定
+                    {
+                        ticks: {                       // 目盛り
+                            min: 0,                        // 最小値
+                        },
+                    }
+                ],
             }
         }
         $(this).describeGraph('dashborad-time-chart', '勉強時間', 'bar', 'rgb(255, 99, 132)', options, timeGraphData);
