@@ -15,7 +15,10 @@ $(function () {
                 yAxes: [                           // Ｙ軸設定
                     {
                         ticks: {                       // 目盛り
-                            min: 0,                        // 最小値
+                            min: 0,
+                            userCallback: function(tick) {
+                                return tick.toString() + '時間';
+                            }
                         },
                     }
                 ],
