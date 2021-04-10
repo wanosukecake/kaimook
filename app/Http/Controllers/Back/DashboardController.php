@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Services\DashboardService;
-use Illuminate\Http\Request;
-use App\Models\Report;
 
 class DashboardController extends Controller
 {
@@ -23,6 +21,6 @@ class DashboardController extends Controller
     public function index()
     {
         $data = $this->dashboardService->getData();
-        return view('back.dashboard.index',compact('data'));
+        return view('back.dashboard.index', compact('data'));
     }
 }

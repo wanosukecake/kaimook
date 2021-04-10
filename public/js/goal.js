@@ -1,7 +1,7 @@
 $(function(){
 
     if (document.getElementById('goalChart')) {
-        let goalGraphData = $.parseJSON($("#goal_graph_data").val());
+        let goalGraphData = JSON.parse($("#goal_graph_data").val());
         let goalOptions = {
             title: {
                 display: true,

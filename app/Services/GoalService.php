@@ -43,15 +43,15 @@ class GoalService extends BaseService
      */
     public function setGoalsExpired() 
     {
-        try{
+        try {
             // 期限切れでない目標を全取得
             $goals = $this->goal->getExpiredGoals();
             $today = Carbon::today();
             $isExpired = ['is_expired' => 1];
             foreach ($goals as $key => $row) {
-                $created_at = Carbon::parse($row['created_at'])->addWeek();
-                // 作成日から１週間以上経過した目標は期限切れに変更
-                if(!$today->lt($created_at)) {
+                $updated_at = Carbon::parse($row['updated_at'])->addWeek();
+                // 最終更新日から１週間以上経過した目標は期限切れに変更
+                if(!$today->lt($updated_at)) {
                     $this->goal->updateById($row['id'], $isExpired) == 1 ?: logger()->error("update Error goal_id is ". $row['id']);
                 }
             }

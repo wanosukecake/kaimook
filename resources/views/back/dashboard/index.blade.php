@@ -99,7 +99,7 @@
     <div class="col-lg-4 col-md-12 col-12 col-sm-12">
       <div class="card">
         <div class="card-header recent-list-head">
-          <h4>最新のレポート</h4>
+          <h4>今月のレポート</h4>
         </div>
         <div class="card-body recent-list">             
           <ul class="list-unstyled list-unstyled-border">
