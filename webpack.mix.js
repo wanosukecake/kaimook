@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js([
+        'resources/js/app.js',
         'resources/js/libraries/Chart.bundle.min.js',    
         'resources/js/libraries/popper.min.js',
         'resources/js/libraries/scripts.js',
@@ -20,7 +21,7 @@ mix.js([
     ], 'public/js/app.js')
     .postCss('resources/css/app.css', 'public/css', [
         //
-    ]);
+    ]).vue();
 
 if (mix.inProduction()) {
     mix.version();
