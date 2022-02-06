@@ -11,3 +11,7 @@ Route::get('/get-graph-data-for-dashboard', 'DashboardController@getGraphDataFor
 Route::get('error/{code}', function ($code) {
     abort($code);
 });
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});
