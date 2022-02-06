@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:8.1.2
+      - image: cimg/php:8.1.2
       #- image: circleci/mysql:9.4
       - image: circleci/mysql:5.7
     branches:
